@@ -11,6 +11,7 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -50,7 +51,7 @@ public class Ticket {
                     joinColumns = @JoinColumn(name = "ticketId"),
                     inverseJoinColumns = @JoinColumn(name = "developerId")
             )
-    private Set<Developer> devsAssigned;
+    private List<Developer> devsAssigned;
 
     @ManyToOne
     @JoinColumn(name = "projectId")

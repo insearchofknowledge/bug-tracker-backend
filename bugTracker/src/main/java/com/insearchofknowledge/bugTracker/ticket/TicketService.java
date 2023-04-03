@@ -9,7 +9,7 @@ public class TicketService {
 
     private final TicketRepository ticketRepository;
 
-    public Ticket createIssue(Ticket issue){
-        return ticketRepository.save(issue);
+    public Ticket createIssue(Ticket ticket){
+        return ticketRepository.save(ticket);
     }
 }

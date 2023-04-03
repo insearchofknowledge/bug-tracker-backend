@@ -8,6 +8,7 @@ import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -40,8 +41,8 @@ public class Project {
             joinColumns = @JoinColumn(name = "projectId"),
             inverseJoinColumns = @JoinColumn(name = "developerId")
     )
-    private Set<Developer> assignedTeam;
+    private List<Developer> assignedTeam;
 
     @OneToMany(mappedBy = "project")
-    private Set<Comment> comments;
+    private List<Comment> comments;
 }
