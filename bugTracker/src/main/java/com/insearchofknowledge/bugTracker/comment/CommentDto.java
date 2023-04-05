@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -15,7 +15,7 @@ public class CommentDto {
 
     private String id;
     private String content;
-    private Date datePosted;
+    private LocalDateTime datePosted;
     private DeveloperDto commentAuthor;
     private String commentAuthorId;
     private ProjectDto project;

@@ -5,13 +5,13 @@ import com.insearchofknowledge.bugTracker.developer.DeveloperRepository;
 import com.insearchofknowledge.bugTracker.generics.Mapper;
 import com.insearchofknowledge.bugTracker.project.ProjectMapper;
 import com.insearchofknowledge.bugTracker.project.ProjectRepository;
-import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor
+
 public class TicketMapper implements Mapper<Ticket, TicketDto> {
 
     private final DeveloperRepository developerRepository;
@@ -19,6 +19,12 @@ public class TicketMapper implements Mapper<Ticket, TicketDto> {
     private final DeveloperMapper developerMapper;
     private final ProjectMapper projectMapper;
 
+    public TicketMapper(DeveloperRepository developerRepository, ProjectRepository projectRepository, @Lazy DeveloperMapper developerMapper, @Lazy ProjectMapper projectMapper) {
+        this.developerRepository = developerRepository;
+        this.projectRepository = projectRepository;
+        this.developerMapper = developerMapper;
+        this.projectMapper = projectMapper;
+    }
 
     @Override
     public TicketDto convertToDto(Ticket entity) {

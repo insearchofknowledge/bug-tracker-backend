@@ -3,11 +3,8 @@ package com.insearchofknowledge.bugTracker.developer;
 import com.insearchofknowledge.bugTracker.generics.Mapper;
 import com.insearchofknowledge.bugTracker.project.ProjectMapper;
 import com.insearchofknowledge.bugTracker.ticket.TicketMapper;
-import com.insearchofknowledge.bugTracker.ticket.TicketRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -15,6 +12,7 @@ public class DeveloperMapper implements Mapper<Developer, DeveloperDto> {
 
     private final TicketMapper ticketMapper;
     private final ProjectMapper projectMapper;
+
     @Override
     public DeveloperDto convertToDto(Developer entity) {
         DeveloperDto developerDto = new DeveloperDto();

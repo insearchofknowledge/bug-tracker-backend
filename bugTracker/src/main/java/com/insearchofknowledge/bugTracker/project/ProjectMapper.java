@@ -5,17 +5,23 @@ import com.insearchofknowledge.bugTracker.developer.DeveloperMapper;
 import com.insearchofknowledge.bugTracker.developer.DeveloperRepository;
 import com.insearchofknowledge.bugTracker.generics.Mapper;
 import com.insearchofknowledge.bugTracker.ticket.TicketMapper;
-import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 @Service
-@RequiredArgsConstructor
 public class ProjectMapper implements Mapper<Project, ProjectDto> {
 
     private final TicketMapper ticketMapper;
     private final DeveloperMapper developerMapper;
     private final CommentMapper commentMapper;
     private final DeveloperRepository developerRepository;
+
+    public ProjectMapper(TicketMapper ticketMapper, @Lazy DeveloperMapper developerMapper, @Lazy CommentMapper commentMapper, DeveloperRepository developerRepository) {
+        this.ticketMapper = ticketMapper;
+        this.developerMapper = developerMapper;
+        this.commentMapper = commentMapper;
+        this.developerRepository = developerRepository;
+    }
 
     @Override
     public ProjectDto convertToDto(Project entity) {

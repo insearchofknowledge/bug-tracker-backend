@@ -9,7 +9,7 @@ import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -27,7 +27,7 @@ public class Comment {
     )
     private String id;
     private String content;
-    private Date datePosted;
+    private LocalDateTime datePosted;
 
     @ManyToOne
     @JoinColumn(name = "developerId")

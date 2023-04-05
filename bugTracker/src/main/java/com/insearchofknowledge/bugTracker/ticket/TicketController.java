@@ -10,15 +10,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/issues")
+@RequestMapping("/api/tickets")
 public class TicketController {
 
     private final TicketService ticketService;
 
     @PostMapping("/add")
-    public ResponseEntity<Ticket> addIssue(@RequestBody Ticket issue){
-        Ticket newIssue = ticketService.createIssue(issue);
-        return new ResponseEntity<>(newIssue, HttpStatus.CREATED);
+    public ResponseEntity<TicketDto> addTicket(@RequestBody TicketDto ticketDto){
+        TicketDto newTicketDto = ticketService.createTicket(ticketDto);
+        return new ResponseEntity<>(newTicketDto, HttpStatus.CREATED);
     }
 
 }

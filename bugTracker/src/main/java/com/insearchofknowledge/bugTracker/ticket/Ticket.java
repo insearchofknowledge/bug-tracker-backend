@@ -10,9 +10,8 @@ import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -32,8 +31,8 @@ public class Ticket {
     private String id;
     private String title;
     private String description;
-    private Date dateCreated;
-    private Date lastDateModified;
+    private LocalDateTime dateCreated;
+    private LocalDateTime lastDateModified;
     @Enumerated(EnumType.STRING)
     private TypeOfTicket typeOfTicket;
     @Enumerated(EnumType.STRING)
