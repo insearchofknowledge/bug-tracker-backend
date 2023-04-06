@@ -1,8 +1,6 @@
 package com.insearchofknowledge.bugTracker.generics;
 
-public interface Mapper<E, D> {
+public interface Mapper<StartingObject, Result> {
 
-    public D convertToDto(E entity);
-
-    public E convertToEntity(D dto);
+    public Result map(StartingObject startingObject);
 }
