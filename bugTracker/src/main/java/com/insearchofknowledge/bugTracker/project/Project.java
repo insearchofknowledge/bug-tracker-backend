@@ -7,7 +7,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 
@@ -29,8 +29,8 @@ public class Project {
     private String id;
     private String name;
     private String description;
-    private Date startDate;
-    private Date deadline;
+    private LocalDateTime startDate;
+    private LocalDateTime deadline;
 
     @OneToMany(mappedBy =  "project")
     private Set<Ticket> tickets;
@@ -42,7 +42,4 @@ public class Project {
             inverseJoinColumns = @JoinColumn(name = "developerId")
     )
     private List<Developer> assignedTeam;
-
-    @OneToMany(mappedBy = "project")
-    private List<Comment> comments;
 }

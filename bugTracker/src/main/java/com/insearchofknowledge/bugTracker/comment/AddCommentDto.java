@@ -11,7 +11,7 @@ public class AddCommentDto {
 
     private String content;
     private String commentAuthor;
-    private String project;
+    private String ticket;
 
     // Date Posted will be set in the service layer
 }

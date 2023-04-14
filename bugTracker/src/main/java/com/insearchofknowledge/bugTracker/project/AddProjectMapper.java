@@ -17,7 +17,6 @@ public class AddProjectMapper implements Mapper<AddProjectDto, Project> {
         project.setDescription(addprojectDto.getDescription());
         project.setDeadline(addprojectDto.getDeadline());
         project.setAssignedTeam(developerRepository.findAllById(addprojectDto.getAssignedTeam()));
-
         return project;
     }
 }

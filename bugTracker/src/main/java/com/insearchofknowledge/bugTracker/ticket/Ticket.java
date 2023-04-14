@@ -1,8 +1,14 @@
 package com.insearchofknowledge.bugTracker.ticket;
 
+import com.insearchofknowledge.bugTracker.comment.Comment;
 import com.insearchofknowledge.bugTracker.developer.Developer;
 import com.insearchofknowledge.bugTracker.project.Project;
+import com.insearchofknowledge.bugTracker.ticket.ticketEnum.TicketPriority;
+import com.insearchofknowledge.bugTracker.ticket.ticketEnum.TicketStatus;
+import com.insearchofknowledge.bugTracker.ticket.ticketEnum.TypeOfTicket;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -29,7 +35,11 @@ public class Ticket {
             strategy = "com.insearchofknowledge.bugTracker.generics.CustomIdGenerator"
     )
     private String id;
+    @NotNull(message = "Title required")
+    @NotBlank
     private String title;
+    @NotNull(message = "Description required")
+    @NotBlank
     private String description;
     private LocalDateTime dateCreated;
     private LocalDateTime lastDateModified;
@@ -42,6 +52,7 @@ public class Ticket {
 
     @ManyToOne
     @JoinColumn(name = "authorId")
+    @NotNull
     private Developer author;
 
     @ManyToMany
@@ -51,6 +62,9 @@ public class Ticket {
                     inverseJoinColumns = @JoinColumn(name = "developerId")
             )
     private List<Developer> devsAssigned;
+
+    @OneToMany(mappedBy = "ticket")
+    private List<Comment> comments;
 
     @ManyToOne
     @JoinColumn(name = "projectId")

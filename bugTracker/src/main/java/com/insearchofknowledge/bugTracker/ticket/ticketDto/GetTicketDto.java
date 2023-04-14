@@ -1,7 +1,12 @@
-package com.insearchofknowledge.bugTracker.ticket;
+package com.insearchofknowledge.bugTracker.ticket.ticketDto;
 
+import com.insearchofknowledge.bugTracker.comment.GetCommentDto;
 import com.insearchofknowledge.bugTracker.developer.GetDeveloperDto;
+import com.insearchofknowledge.bugTracker.developer.GetDeveloperSimplifiedDto;
 import com.insearchofknowledge.bugTracker.project.GetProjectDto;
+import com.insearchofknowledge.bugTracker.ticket.ticketEnum.TicketPriority;
+import com.insearchofknowledge.bugTracker.ticket.ticketEnum.TicketStatus;
+import com.insearchofknowledge.bugTracker.ticket.ticketEnum.TypeOfTicket;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -22,7 +27,8 @@ public class GetTicketDto {
     private TypeOfTicket typeOfTicket;
     private TicketPriority ticketPriority;
     private TicketStatus ticketStatus;
-    private GetDeveloperDto author;
-    private List<GetDeveloperDto> devsAssigned;
+    private GetDeveloperSimplifiedDto author;
+    private List<GetDeveloperSimplifiedDto> devsAssigned;
+    private List<GetCommentDto> comments;
     private GetProjectDto project;
 }

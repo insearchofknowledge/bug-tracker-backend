@@ -1,4 +1,4 @@
-package com.insearchofknowledge.bugTracker.ticket;
+package com.insearchofknowledge.bugTracker.ticket.ticketEnum;
 
 public enum TicketPriority {
 

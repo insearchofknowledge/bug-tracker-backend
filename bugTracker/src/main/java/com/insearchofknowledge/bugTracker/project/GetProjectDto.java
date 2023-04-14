@@ -1,13 +1,12 @@
 package com.insearchofknowledge.bugTracker.project;
 
-import com.insearchofknowledge.bugTracker.comment.GetCommentDto;
 import com.insearchofknowledge.bugTracker.developer.GetDeveloperDto;
-import com.insearchofknowledge.bugTracker.ticket.GetTicketDto;
+import com.insearchofknowledge.bugTracker.ticket.ticketDto.GetTicketDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -18,10 +17,8 @@ public class GetProjectDto {
     private String id;
     private String name;
     private String description;
-    private Date startDate;
-    private Date deadline;
+    private LocalDateTime startDate;
+    private LocalDateTime deadline;
     private List<GetTicketDto> tickets;
     private List<GetDeveloperDto> assignedTeam;
-    private List<GetCommentDto> comments;
-
 }

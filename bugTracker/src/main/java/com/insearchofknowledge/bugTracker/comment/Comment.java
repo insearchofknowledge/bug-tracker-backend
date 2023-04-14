@@ -2,6 +2,7 @@ package com.insearchofknowledge.bugTracker.comment;
 
 import com.insearchofknowledge.bugTracker.developer.Developer;
 import com.insearchofknowledge.bugTracker.project.Project;
+import com.insearchofknowledge.bugTracker.ticket.Ticket;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -34,7 +35,7 @@ public class Comment {
     private Developer commentAuthor;
 
     @ManyToOne
-    @JoinColumn(name = "projectId")
-    private Project project;
+    @JoinColumn(name = "ticketId")
+    private Ticket ticket;
 
 }
