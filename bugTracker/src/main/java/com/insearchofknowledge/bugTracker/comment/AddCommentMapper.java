@@ -2,7 +2,6 @@ package com.insearchofknowledge.bugTracker.comment;
 
 import com.insearchofknowledge.bugTracker.developer.DeveloperRepository;
 import com.insearchofknowledge.bugTracker.generics.Mapper;
-import com.insearchofknowledge.bugTracker.project.ProjectRepository;
 import com.insearchofknowledge.bugTracker.ticket.TicketRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -12,7 +11,6 @@ import org.springframework.stereotype.Service;
 public class AddCommentMapper implements Mapper<AddCommentDto, Comment> {
 
     private final DeveloperRepository developerRepository;
-    private final ProjectRepository projectRepository;
     private final TicketRepository ticketRepository;
 
     @Override

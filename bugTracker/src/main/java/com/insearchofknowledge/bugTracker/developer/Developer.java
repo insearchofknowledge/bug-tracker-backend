@@ -8,7 +8,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -22,7 +25,7 @@ public class Developer {
     @GeneratedValue(generator = "developer-generic-generator")
     @GenericGenerator(
             name = "developer-generic-generator",
-            parameters = @org.hibernate.annotations.Parameter(name = "prefix", value = "DEV"),
+            parameters = @Parameter(name = "prefix", value = "DEV"),
             strategy = "com.insearchofknowledge.bugTracker.generics.CustomIdGenerator"
     )
     private String id;
@@ -34,14 +37,14 @@ public class Developer {
     private String role;  // Admin, Project Leader, Developer
 
     @OneToMany(mappedBy = "author")
-    private Set<Ticket> ticketsCreated;
+    private List<Ticket> ticketsCreated = new ArrayList<>();
 
     @ManyToMany(mappedBy = "devsAssigned")
-    private Set<Ticket> assignedTickets;
+    private List<Ticket> assignedTickets;
 
     @ManyToMany(mappedBy = "assignedTeam")
-    private Set<Project> projects;
+    private List<Project> projects;
 
     @OneToMany(mappedBy = "commentAuthor")
-    private Set<Comment> comments;
+    private List<Comment> comments;
 }

@@ -37,6 +37,7 @@ public class Ticket {
     private String id;
     @NotNull(message = "Title required")
     @NotBlank
+    @Column(unique = true)
     private String title;
     @NotNull(message = "Description required")
     @NotBlank

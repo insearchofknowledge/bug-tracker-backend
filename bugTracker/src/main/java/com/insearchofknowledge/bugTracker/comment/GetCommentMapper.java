@@ -1,6 +1,7 @@
 package com.insearchofknowledge.bugTracker.comment;
 
 import com.insearchofknowledge.bugTracker.developer.GetDeveloperMapper;
+import com.insearchofknowledge.bugTracker.developer.GetDeveloperSimplifiedDtoMapper;
 import com.insearchofknowledge.bugTracker.generics.Mapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -9,7 +10,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class GetCommentMapper implements Mapper<Comment, GetCommentDto> {
 
-    private final GetDeveloperMapper getDeveloperMapper;
+    private final GetDeveloperSimplifiedDtoMapper getDeveloperSimplifiedDtoMapper;
 
     @Override
     public GetCommentDto map(Comment entity) {
@@ -17,7 +18,7 @@ public class GetCommentMapper implements Mapper<Comment, GetCommentDto> {
         getCommentDto.setId(entity.getId());
         getCommentDto.setContent(entity.getContent());
         getCommentDto.setDatePosted(entity.getDatePosted());
-        getCommentDto.setCommentAuthor(getDeveloperMapper.map(entity.getCommentAuthor()));
+        getCommentDto.setCommentAuthor(getDeveloperSimplifiedDtoMapper.map(entity.getCommentAuthor()));
         return getCommentDto;
     }
 }

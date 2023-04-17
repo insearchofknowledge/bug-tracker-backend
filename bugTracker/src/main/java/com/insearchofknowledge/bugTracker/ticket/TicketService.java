@@ -30,8 +30,9 @@ public class TicketService {
 
     public GetTicketDto createTicket(AddTicketDto addTicketDto){
         Ticket newTicket = addTicketMapper.map(addTicketDto);
-        newTicket.setDateCreated(LocalDateTime.now()/*.truncatedTo(ChronoUnit.SECONDS)*/);
+        newTicket.setDateCreated(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS));
         ticketRepository.save(newTicket);
+        developerService.updateTicketsCreated(newTicket.getAuthor().getId(),newTicket);
         return getTicketMapper.map(newTicket);
     }
 

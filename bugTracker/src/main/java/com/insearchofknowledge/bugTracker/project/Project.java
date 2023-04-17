@@ -1,11 +1,11 @@
 package com.insearchofknowledge.bugTracker.project;
 
-import com.insearchofknowledge.bugTracker.comment.Comment;
 import com.insearchofknowledge.bugTracker.developer.Developer;
 import com.insearchofknowledge.bugTracker.ticket.Ticket;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -23,7 +23,7 @@ public class Project {
     @GeneratedValue(generator = "project-generic-generator")
     @GenericGenerator(
             name = "project-generic-generator",
-            parameters = @org.hibernate.annotations.Parameter(name = "prefix", value = "PRO"),
+            parameters = @Parameter(name = "prefix", value = "PRJ"),
             strategy = "com.insearchofknowledge.bugTracker.generics.CustomIdGenerator"
     )
     private String id;
