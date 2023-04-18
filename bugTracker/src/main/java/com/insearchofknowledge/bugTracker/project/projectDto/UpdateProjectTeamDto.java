@@ -4,19 +4,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
 @Setter
 @NoArgsConstructor
-public class AddProjectDto {
+public class UpdateProjectTeamDto {
 
-    private String name;
-    private String description;
-    private LocalDateTime startDate;
-    private LocalDateTime deadline;
     private List<String> assignedTeam;
-
-    // Start date will be set in the service layer
 }

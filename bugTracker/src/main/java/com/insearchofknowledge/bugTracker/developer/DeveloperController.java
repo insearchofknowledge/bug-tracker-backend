@@ -19,6 +19,12 @@ public class DeveloperController {
 
     private final DeveloperService developerService;
 
+    @PostMapping("/create")
+    public ResponseEntity<GetDeveloperDto> createDeveloper(@RequestBody @Valid AddDeveloperDto addDeveloperDto) {
+        GetDeveloperDto getDeveloperDto = developerService.addNewDeveloper(addDeveloperDto);
+        return ResponseEntity.ok(getDeveloperDto);
+    }
+
     @GetMapping("/{developerId}")
     public ResponseEntity<GetDeveloperDto> getDeveloperById(@PathVariable("developerId") String id) {
         GetDeveloperDto getDeveloperDto = developerService.fetchDeveloperById(id);
@@ -29,12 +35,6 @@ public class DeveloperController {
     public ResponseEntity<List<GetDeveloperDto>> getAllDevelopers() {
         List<GetDeveloperDto> listOfDeveloperDto = developerService.fetchAllDevelopers();
         return ResponseEntity.ok(listOfDeveloperDto);
-    }
-
-    @PostMapping("/create")
-    public ResponseEntity<GetDeveloperDto> createDeveloper(@RequestBody @Valid AddDeveloperDto addDeveloperDto) {
-        GetDeveloperDto getDeveloperDto = developerService.addNewDeveloper(addDeveloperDto);
-        return ResponseEntity.ok(getDeveloperDto);
     }
 
     @PatchMapping("/update/{developerId}")

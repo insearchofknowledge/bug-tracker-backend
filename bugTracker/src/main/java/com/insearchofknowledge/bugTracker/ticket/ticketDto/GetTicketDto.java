@@ -26,8 +26,8 @@ public class GetTicketDto {
     private TypeOfTicket typeOfTicket;
     private TicketPriority ticketPriority;
     private TicketStatus ticketStatus;
-    private GetDeveloperSimplifiedDto author;
-    private List<GetDeveloperSimplifiedDto> devsAssigned;
+    private GetDeveloperSimplifiedDto author;  // SimplifiedDto reduce excessive data traffic and to avoid StackOverFlow
+    private List<GetDeveloperSimplifiedDto> devsAssigned;  // SimplifiedDto reduce excessive data traffic and to avoid StackOverFlow
     private List<GetCommentDto> comments;
     private GetProjectDto project;
 }

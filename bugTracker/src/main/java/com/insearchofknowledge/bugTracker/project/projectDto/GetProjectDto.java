@@ -1,6 +1,6 @@
 package com.insearchofknowledge.bugTracker.project.projectDto;
 
-import com.insearchofknowledge.bugTracker.developer.developerDto.GetDeveloperDto;
+import com.insearchofknowledge.bugTracker.developer.developerDto.GetDeveloperSimplifiedDto;
 import com.insearchofknowledge.bugTracker.ticket.ticketDto.GetTicketDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,5 +20,5 @@ public class GetProjectDto {
     private LocalDateTime startDate;
     private LocalDateTime deadline;
     private List<GetTicketDto> tickets;
-    private List<GetDeveloperDto> assignedTeam;
+    private List<GetDeveloperSimplifiedDto> assignedTeam;  // SimplifiedDto reduce excessive data traffic and to avoid StackOverFlow
 }

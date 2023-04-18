@@ -34,7 +34,7 @@ public class TicketService {
         // we persist the ticket (before we add it to the list of the ticketsCreated by the author)
         ticketRepository.save(newTicket);
         // we add the newly created ticket to the list of the created tickets by this developer (author)
-        developerService.updateTicketsCreated(newTicket.getAuthor().getId(),newTicket);
+        //developerService.updateTicketsCreated(newTicket.getAuthor().getId(),newTicket);
         return getTicketMapper.map(newTicket);
     }
 
@@ -83,7 +83,7 @@ public class TicketService {
 //    }
 
     public GetTicketDto updateSingleFieldOfATicket(String id, UpdateTicketSingleFieldDto updateTicketSingleFieldDto) throws EntityNotFoundException, NoSuchFieldException, ClassCastException {
-        Ticket ticketToBeUpdated = getTicketIfItExists(id);
+        Ticket ticketToBeUpdated = fetchTicketIfItExists(id);
 
         switch (updateTicketSingleFieldDto.getFieldName()) {
             case "title":
@@ -116,7 +116,7 @@ public class TicketService {
     }
 
     public GetTicketDto updateMultipleFieldsOfATicket(String id, UpdateTicketMultipleFieldsDto updateTicketMultipleFieldsDto) throws EntityNotFoundException{
-        Ticket ticketToBeUpdated = getTicketIfItExists(id);
+        Ticket ticketToBeUpdated = fetchTicketIfItExists(id);
         ticketToBeUpdated.setTitle(updateTicketMultipleFieldsDto.getTitle());
         ticketToBeUpdated.setDescription(updateTicketMultipleFieldsDto.getDescription());
         ticketToBeUpdated.setTypeOfTicket(Enum.valueOf(TypeOfTicket.class, updateTicketMultipleFieldsDto.getTypeOfTicket()));
@@ -129,10 +129,10 @@ public class TicketService {
     }
 
     public void deleteTicket(String id) {
-        ticketRepository.delete(getTicketIfItExists(id));
+        ticketRepository.delete(fetchTicketIfItExists(id));
     }
 
-    private Ticket getTicketIfItExists(String id) {
+    private Ticket fetchTicketIfItExists(String id) {
         Optional<Ticket> optionalTicket = ticketRepository.findById(id);
         if(optionalTicket.isPresent()) {
             return optionalTicket.get();

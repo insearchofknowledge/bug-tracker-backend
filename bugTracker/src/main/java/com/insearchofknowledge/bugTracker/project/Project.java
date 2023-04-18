@@ -3,6 +3,8 @@ package com.insearchofknowledge.bugTracker.project;
 import com.insearchofknowledge.bugTracker.developer.Developer;
 import com.insearchofknowledge.bugTracker.ticket.Ticket;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
@@ -27,7 +29,11 @@ public class Project {
             strategy = "com.insearchofknowledge.bugTracker.generics.CustomIdGenerator"
     )
     private String id;
+    @NotNull(message = "Name required")
+    @NotBlank(message = "Name required")
     private String name;
+    @NotNull
+    @NotBlank
     private String description;
     private LocalDateTime startDate;
     private LocalDateTime deadline;

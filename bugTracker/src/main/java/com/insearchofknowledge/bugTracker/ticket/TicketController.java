@@ -31,12 +31,6 @@ public class TicketController {
         return ResponseEntity.ok(tickets);
     }
 
-//    @PatchMapping("/update/{ticketId}")
-//    public ResponseEntity<GetTicketDto> updateASingleFieldOfATicket(@PathVariable("ticketId") String id, @RequestBody UpdateTicketSingleFieldDto updateTicketDto) throws Exception {
-//        GetTicketDto updatedTicketDto = ticketService.editSingleField(id, updateTicketDto);
-//        return ResponseEntity.ok(updatedTicketDto);
-//    }
-
     @PatchMapping("/update/{ticketId}")
     public ResponseEntity<GetTicketDto> editASingleFieldOfATicket(@PathVariable("ticketId") String id, @RequestBody @Valid UpdateTicketSingleFieldDto updateTicketSingleFieldDto) throws NoSuchFieldException {
         GetTicketDto updatedTicketDto = ticketService.updateSingleFieldOfATicket(id, updateTicketSingleFieldDto);
