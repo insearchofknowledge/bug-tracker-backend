@@ -1,7 +1,10 @@
-package com.insearchofknowledge.bugTracker.developer;
+package com.insearchofknowledge.bugTracker.developer.developerMapper;
 
+import com.insearchofknowledge.bugTracker.comment.GetCommentMapper;
+import com.insearchofknowledge.bugTracker.developer.Developer;
+import com.insearchofknowledge.bugTracker.developer.developerDto.GetDeveloperDto;
 import com.insearchofknowledge.bugTracker.generics.Mapper;
-import com.insearchofknowledge.bugTracker.project.GetProjectMapper;
+import com.insearchofknowledge.bugTracker.project.projectMapper.GetProjectMapper;
 import com.insearchofknowledge.bugTracker.ticket.ticketMapper.GetTicketMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -12,6 +15,7 @@ public class GetDeveloperMapper implements Mapper<Developer, GetDeveloperDto> {
 
     private final GetTicketMapper getTicketMapper;
     private final GetProjectMapper getProjectMapper;
+    private final GetCommentMapper getCommentMapper;
 
     @Override
     public GetDeveloperDto map(Developer entity) {
@@ -22,9 +26,15 @@ public class GetDeveloperMapper implements Mapper<Developer, GetDeveloperDto> {
         getDeveloperDto.setPhone(entity.getPhone());
         getDeveloperDto.setEmail(entity.getEmail());
         getDeveloperDto.setRole(entity.getRole());
-        getDeveloperDto.setTicketsCreated(entity.getTicketsCreated().stream().map(getTicketMapper::map).toList());
-        getDeveloperDto.setProjects(entity.getProjects().stream().map(getProjectMapper::map).toList());
-        // COMMENTS ?!?!
+        if (entity.getTicketsCreated() != null) {
+            getDeveloperDto.setTicketsCreated(entity.getTicketsCreated().stream().map(getTicketMapper::map).toList());
+        }
+        if (entity.getProjects() != null) {
+            getDeveloperDto.setProjects(entity.getProjects().stream().map(getProjectMapper::map).toList());
+        }
+        if (entity.getComments() != null) {
+            getDeveloperDto.setComments(entity.getComments().stream().map(getCommentMapper::map).toList());
+        }
         return getDeveloperDto;
     }
 }

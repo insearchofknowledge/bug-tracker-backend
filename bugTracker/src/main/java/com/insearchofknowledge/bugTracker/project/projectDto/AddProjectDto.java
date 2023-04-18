@@ -1,4 +1,4 @@
-package com.insearchofknowledge.bugTracker.project;
+package com.insearchofknowledge.bugTracker.project.projectDto;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

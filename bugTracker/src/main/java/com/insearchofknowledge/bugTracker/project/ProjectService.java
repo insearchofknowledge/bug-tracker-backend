@@ -1,11 +1,14 @@
 package com.insearchofknowledge.bugTracker.project;
 
+import com.insearchofknowledge.bugTracker.project.projectDto.AddProjectDto;
+import com.insearchofknowledge.bugTracker.project.projectDto.GetProjectDto;
+import com.insearchofknowledge.bugTracker.project.projectMapper.AddProjectMapper;
+import com.insearchofknowledge.bugTracker.project.projectMapper.GetProjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.List;
 
 @RequiredArgsConstructor
 @Service

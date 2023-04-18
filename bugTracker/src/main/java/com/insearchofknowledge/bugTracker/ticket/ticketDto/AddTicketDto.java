@@ -14,16 +14,29 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AddTicketDto {
 
-    @NotNull(message = "Message from DTO TITLE NEEDED!")
-    @NotBlank(message = "Message from DTO not blank!!!!!!!!!")
+    @NotNull(message = "Title required!")
+    @NotBlank(message = "Title required")
     private String title;
+    @NotNull(message = "Description required")
+    @NotBlank(message = "Description required")
     private String description;
     private LocalDateTime dateCreated;
     private LocalDateTime lastDateModified;
-    private String typeOfTicket;  // will use string instead of int since is less prone to errors in case the order of Enums gets switched up
+    @NotNull(message = "Type required")
+    @NotBlank(message = "Type required")
+    private String typeOfTicket;
+    // will use string instead of int since is less prone to errors in case the order of Enums gets switched up
+    @NotNull(message = "Priority required")
+    @NotBlank(message = "Priority required")
     private String ticketPriority;  // will use string instead of int since is less prone to errors in case the order of Enums gets switched up
+    @NotNull(message = "Status required")
+    @NotBlank(message = "Status required")
     private String ticketStatus;  // will use string instead of int since is less prone to errors in case the order of Enums gets switched up
+    @NotNull(message = "Author required")
+    @NotBlank(message = "Author required")
     private String author;
     private List<String> devsAssigned;
+    @NotNull(message = "The ticket needs to be assigned to a project")
+    @NotBlank(message = "The ticket needs to be assigned to a project")
     private String project;
 }

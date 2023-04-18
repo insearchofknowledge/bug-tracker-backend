@@ -1,7 +1,6 @@
 package com.insearchofknowledge.bugTracker.comment;
 
-import com.insearchofknowledge.bugTracker.developer.GetDeveloperDto;
-import com.insearchofknowledge.bugTracker.developer.GetDeveloperSimplifiedDto;
+import com.insearchofknowledge.bugTracker.developer.developerDto.GetDeveloperSimplifiedDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

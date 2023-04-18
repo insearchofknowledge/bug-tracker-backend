@@ -1,8 +1,10 @@
-package com.insearchofknowledge.bugTracker.project;
+package com.insearchofknowledge.bugTracker.project.projectMapper;
 
 import com.insearchofknowledge.bugTracker.comment.GetCommentMapper;
-import com.insearchofknowledge.bugTracker.developer.GetDeveloperMapper;
+import com.insearchofknowledge.bugTracker.developer.developerMapper.GetDeveloperMapper;
 import com.insearchofknowledge.bugTracker.generics.Mapper;
+import com.insearchofknowledge.bugTracker.project.projectDto.GetProjectDto;
+import com.insearchofknowledge.bugTracker.project.Project;
 import com.insearchofknowledge.bugTracker.ticket.ticketMapper.GetTicketMapper;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;

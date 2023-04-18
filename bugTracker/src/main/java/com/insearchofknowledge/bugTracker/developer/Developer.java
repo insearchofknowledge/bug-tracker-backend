@@ -4,6 +4,9 @@ import com.insearchofknowledge.bugTracker.comment.Comment;
 import com.insearchofknowledge.bugTracker.project.Project;
 import com.insearchofknowledge.bugTracker.ticket.Ticket;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,11 +15,11 @@ import org.hibernate.annotations.Parameter;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "developers")
 public class Developer {
@@ -29,9 +32,15 @@ public class Developer {
             strategy = "com.insearchofknowledge.bugTracker.generics.CustomIdGenerator"
     )
     private String id;
+    @NotNull
+    @NotBlank
     private String firstName;
     private String lastName;
     private String phone;
+
+    @NotNull
+    @NotBlank
+    @Column(unique = true)
     private String email;
     private String password;
     private String role;  // Admin, Project Leader, Developer

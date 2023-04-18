@@ -1,7 +1,7 @@
-package com.insearchofknowledge.bugTracker.developer;
+package com.insearchofknowledge.bugTracker.developer.developerDto;
 
 import com.insearchofknowledge.bugTracker.comment.GetCommentDto;
-import com.insearchofknowledge.bugTracker.project.GetProjectDto;
+import com.insearchofknowledge.bugTracker.project.projectDto.GetProjectDto;
 import com.insearchofknowledge.bugTracker.ticket.ticketDto.GetTicketDto;
 import lombok.*;
 

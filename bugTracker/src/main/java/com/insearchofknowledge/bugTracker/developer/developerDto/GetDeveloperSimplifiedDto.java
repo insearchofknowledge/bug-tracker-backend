@@ -1,4 +1,4 @@
-package com.insearchofknowledge.bugTracker.developer;
+package com.insearchofknowledge.bugTracker.developer.developerDto;
 
 import lombok.Builder;
 import lombok.Getter;

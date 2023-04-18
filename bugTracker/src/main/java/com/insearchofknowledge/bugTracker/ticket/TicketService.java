@@ -28,10 +28,12 @@ public class TicketService {
     private final TicketRepository ticketRepository;
     private final DeveloperService developerService;
 
-    public GetTicketDto createTicket(AddTicketDto addTicketDto){
+    public GetTicketDto addNewTicket(AddTicketDto addTicketDto){
         Ticket newTicket = addTicketMapper.map(addTicketDto);
         newTicket.setDateCreated(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS));
+        // we persist the ticket (before we add it to the list of the ticketsCreated by the author)
         ticketRepository.save(newTicket);
+        // we add the newly created ticket to the list of the created tickets by this developer (author)
         developerService.updateTicketsCreated(newTicket.getAuthor().getId(),newTicket);
         return getTicketMapper.map(newTicket);
     }
@@ -80,7 +82,7 @@ public class TicketService {
 //        return getTicketMapper.map(ticketRepository.save(ticketToBeUpdated));
 //    }
 
-    public GetTicketDto editSingleField(String id, UpdateTicketSingleFieldDto updateTicketSingleFieldDto) throws EntityNotFoundException, NoSuchFieldException, ClassCastException {
+    public GetTicketDto updateSingleFieldOfATicket(String id, UpdateTicketSingleFieldDto updateTicketSingleFieldDto) throws EntityNotFoundException, NoSuchFieldException, ClassCastException {
         Ticket ticketToBeUpdated = getTicketIfItExists(id);
 
         switch (updateTicketSingleFieldDto.getFieldName()) {
@@ -101,7 +103,7 @@ public class TicketService {
                 break;
             case "devsAssigned":
                 if(updateTicketSingleFieldDto.getFieldValue() instanceof List) {
-                    ticketToBeUpdated.setDevsAssigned(developerService.getAllDevelopersByIdList((List<String>) updateTicketSingleFieldDto.getFieldValue()));
+                    ticketToBeUpdated.setDevsAssigned(developerService.fetchAllDevelopersByIdList((List<String>) updateTicketSingleFieldDto.getFieldValue()));
                 } else {
                     throw new ClassCastException("The data type of the list of the ids provided is inappropriate. A list of strings is needed");
                 }
@@ -113,14 +115,14 @@ public class TicketService {
         return getTicketMapper.map(ticketRepository.save(ticketToBeUpdated));
     }
 
-    public GetTicketDto editMultipleFieldsOfATicket(String id, UpdateTicketMultipleFieldsDto updateTicketMultipleFieldsDto) throws EntityNotFoundException{
+    public GetTicketDto updateMultipleFieldsOfATicket(String id, UpdateTicketMultipleFieldsDto updateTicketMultipleFieldsDto) throws EntityNotFoundException{
         Ticket ticketToBeUpdated = getTicketIfItExists(id);
         ticketToBeUpdated.setTitle(updateTicketMultipleFieldsDto.getTitle());
         ticketToBeUpdated.setDescription(updateTicketMultipleFieldsDto.getDescription());
         ticketToBeUpdated.setTypeOfTicket(Enum.valueOf(TypeOfTicket.class, updateTicketMultipleFieldsDto.getTypeOfTicket()));
         ticketToBeUpdated.setTicketPriority(Enum.valueOf(TicketPriority.class, updateTicketMultipleFieldsDto.getTicketPriority()));
         ticketToBeUpdated.setTicketStatus(Enum.valueOf(TicketStatus.class, updateTicketMultipleFieldsDto.getTicketStatus()));
-        ticketToBeUpdated.setDevsAssigned(developerService.getAllDevelopersByIdList(updateTicketMultipleFieldsDto.getDevsAssigned()));
+        ticketToBeUpdated.setDevsAssigned(developerService.fetchAllDevelopersByIdList(updateTicketMultipleFieldsDto.getDevsAssigned()));
         ticketToBeUpdated.setLastDateModified(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS));
 
         return getTicketMapper.map(ticketRepository.save(ticketToBeUpdated));

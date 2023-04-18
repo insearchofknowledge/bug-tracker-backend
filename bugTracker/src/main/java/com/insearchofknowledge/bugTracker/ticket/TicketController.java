@@ -21,7 +21,7 @@ public class TicketController {
 
     @PostMapping("/add")
     public ResponseEntity<GetTicketDto> addTicket(@RequestBody  @Valid AddTicketDto addTicketDto){
-        GetTicketDto getTicketDto = ticketService.createTicket(addTicketDto);
+        GetTicketDto getTicketDto = ticketService.addNewTicket(addTicketDto);
         return new ResponseEntity<>(getTicketDto, HttpStatus.CREATED);
     }
 
@@ -38,14 +38,14 @@ public class TicketController {
 //    }
 
     @PatchMapping("/update/{ticketId}")
-    public ResponseEntity<GetTicketDto> updateASingleFieldOfATicket(@PathVariable("ticketId") String id, @RequestBody @Valid UpdateTicketSingleFieldDto updateTicketSingleFieldDto) throws NoSuchFieldException {
-        GetTicketDto updatedTicketDto = ticketService.editSingleField(id, updateTicketSingleFieldDto);
+    public ResponseEntity<GetTicketDto> editASingleFieldOfATicket(@PathVariable("ticketId") String id, @RequestBody @Valid UpdateTicketSingleFieldDto updateTicketSingleFieldDto) throws NoSuchFieldException {
+        GetTicketDto updatedTicketDto = ticketService.updateSingleFieldOfATicket(id, updateTicketSingleFieldDto);
         return ResponseEntity.ok(updatedTicketDto);
     }
 
-    @PatchMapping("updateFields/{ticketId}")
-    public ResponseEntity<GetTicketDto> updateMultipleFieldsOfATicket(@PathVariable("ticketId") String id, @RequestBody @Valid UpdateTicketMultipleFieldsDto updateTicketMultipleFieldsDto) {
-        GetTicketDto updatedTicketDto = ticketService.editMultipleFieldsOfATicket(id, updateTicketMultipleFieldsDto);
+    @PatchMapping("/updateFields/{ticketId}")
+    public ResponseEntity<GetTicketDto> editMultipleFieldsOfATicket(@PathVariable("ticketId") String id, @RequestBody @Valid UpdateTicketMultipleFieldsDto updateTicketMultipleFieldsDto) {
+        GetTicketDto updatedTicketDto = ticketService.updateMultipleFieldsOfATicket(id, updateTicketMultipleFieldsDto);
         return ResponseEntity.ok(updatedTicketDto);
     }
 

@@ -36,24 +36,27 @@ public class Ticket {
     )
     private String id;
     @NotNull(message = "Title required")
-    @NotBlank
+    @NotBlank(message = "Title required")
     @Column(unique = true)
     private String title;
     @NotNull(message = "Description required")
-    @NotBlank
+    @NotBlank(message = "Description required")
     private String description;
     private LocalDateTime dateCreated;
     private LocalDateTime lastDateModified;
+    @NotNull(message = "Type required")
     @Enumerated(EnumType.STRING)
     private TypeOfTicket typeOfTicket;
+    @NotNull(message = "Priority required")
     @Enumerated(EnumType.STRING)
     private TicketPriority ticketPriority;
+    @NotNull(message = "Status required")
     @Enumerated(EnumType.STRING)
     private TicketStatus ticketStatus;
 
     @ManyToOne
     @JoinColumn(name = "authorId")
-    @NotNull
+    @NotNull(message = "Author required")
     private Developer author;
 
     @ManyToMany
@@ -69,5 +72,6 @@ public class Ticket {
 
     @ManyToOne
     @JoinColumn(name = "projectId")
+    @NotNull(message = "The ticket needs to be assigned to a project")
     private Project project;
 }

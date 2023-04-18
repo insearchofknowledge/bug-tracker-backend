@@ -1,5 +1,7 @@
 package com.insearchofknowledge.bugTracker.project;
 
+import com.insearchofknowledge.bugTracker.project.projectDto.AddProjectDto;
+import com.insearchofknowledge.bugTracker.project.projectDto.GetProjectDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

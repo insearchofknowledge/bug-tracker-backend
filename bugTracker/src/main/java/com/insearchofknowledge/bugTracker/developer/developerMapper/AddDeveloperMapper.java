@@ -1,5 +1,7 @@
-package com.insearchofknowledge.bugTracker.developer;
+package com.insearchofknowledge.bugTracker.developer.developerMapper;
 
+import com.insearchofknowledge.bugTracker.developer.Developer;
+import com.insearchofknowledge.bugTracker.developer.developerDto.AddDeveloperDto;
 import com.insearchofknowledge.bugTracker.generics.Mapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
