@@ -1,6 +1,6 @@
 package com.insearchofknowledge.bugTracker.ticket.ticketMapper;
 
-import com.insearchofknowledge.bugTracker.comment.GetCommentMapper;
+import com.insearchofknowledge.bugTracker.comment.commentMapper.GetCommentMapper;
 import com.insearchofknowledge.bugTracker.developer.developerMapper.GetDeveloperSimplifiedDtoMapper;
 import com.insearchofknowledge.bugTracker.generics.Mapper;
 import com.insearchofknowledge.bugTracker.ticket.Ticket;

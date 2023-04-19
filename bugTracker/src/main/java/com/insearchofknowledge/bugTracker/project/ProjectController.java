@@ -20,7 +20,7 @@ public class ProjectController {
 
     @PostMapping("/add")
     public ResponseEntity<GetProjectDto> addProject(@RequestBody AddProjectDto addProjectDto) {
-        return new ResponseEntity<>(projectService.createProject(addProjectDto), HttpStatus.CREATED);
+        return new ResponseEntity<>(projectService.createNewProject(addProjectDto), HttpStatus.CREATED);
     }
 
     @GetMapping("{projectId}")

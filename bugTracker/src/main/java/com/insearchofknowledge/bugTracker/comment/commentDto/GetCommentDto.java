@@ -1,4 +1,4 @@
-package com.insearchofknowledge.bugTracker.comment;
+package com.insearchofknowledge.bugTracker.comment.commentDto;
 
 import com.insearchofknowledge.bugTracker.developer.developerDto.GetDeveloperSimplifiedDto;
 import lombok.Getter;
@@ -15,5 +15,6 @@ public class GetCommentDto {
     private String id;
     private String content;
     private LocalDateTime datePosted;
+    private Boolean wasEdited;
     private GetDeveloperSimplifiedDto commentAuthor;
 }

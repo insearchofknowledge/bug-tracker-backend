@@ -1,5 +1,6 @@
 package com.insearchofknowledge.bugTracker.ticket;
 
+import com.insearchofknowledge.bugTracker.comment.Comment;
 import com.insearchofknowledge.bugTracker.developer.DeveloperService;
 import com.insearchofknowledge.bugTracker.ticket.ticketDto.AddTicketDto;
 import com.insearchofknowledge.bugTracker.ticket.ticketDto.GetTicketDto;
@@ -28,7 +29,7 @@ public class TicketService {
     private final TicketRepository ticketRepository;
     private final DeveloperService developerService;
 
-    public GetTicketDto addNewTicket(AddTicketDto addTicketDto){
+    public GetTicketDto createNewTicket(AddTicketDto addTicketDto) {
         Ticket newTicket = addTicketMapper.map(addTicketDto);
         newTicket.setDateCreated(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS));
         // we persist the ticket (before we add it to the list of the ticketsCreated by the author)
@@ -38,8 +39,19 @@ public class TicketService {
         return getTicketMapper.map(newTicket);
     }
 
-    public List<GetTicketDto> findAllTickets() {
-       return ticketRepository.findAll().stream().map(getTicketMapper::map).toList();
+    public GetTicketDto fetchTicketById(String ticketId) {
+        Ticket ticket = fetchTicketIfItExists(ticketId);
+        return getTicketMapper.map(ticket);
+    }
+
+    public List<GetTicketDto> fetchAllTickets() {
+        return ticketRepository.findAll().stream().map(getTicketMapper::map).toList();
+    }
+
+    public List<Comment> fetchCommentsForTicket(String ticketId) {
+        Ticket ticket = fetchTicketIfItExists(ticketId);
+        List<Comment> comments = ticket.getComments();
+        return comments;
     }
 
 //    public GetTicketDto editSingleField(String id, UpdateTicketSingleFieldDto updateTicketDto) throws Exception {
@@ -93,16 +105,16 @@ public class TicketService {
                 ticketToBeUpdated.setDescription((String) updateTicketSingleFieldDto.getFieldValue());
                 break;
             case "typeOfTicket":
-                ticketToBeUpdated.setTypeOfTicket(Enum.valueOf(TypeOfTicket.class,(String) updateTicketSingleFieldDto.getFieldValue()));
+                ticketToBeUpdated.setTypeOfTicket(Enum.valueOf(TypeOfTicket.class, (String) updateTicketSingleFieldDto.getFieldValue()));
                 break;
             case "ticketPriority":
-                ticketToBeUpdated.setTicketPriority(Enum.valueOf(TicketPriority.class,(String) updateTicketSingleFieldDto.getFieldValue() ));
+                ticketToBeUpdated.setTicketPriority(Enum.valueOf(TicketPriority.class, (String) updateTicketSingleFieldDto.getFieldValue()));
                 break;
             case "ticketStatus":
                 ticketToBeUpdated.setTicketStatus(Enum.valueOf(TicketStatus.class, (String) updateTicketSingleFieldDto.getFieldValue()));
                 break;
             case "devsAssigned":
-                if(updateTicketSingleFieldDto.getFieldValue() instanceof List) {
+                if (updateTicketSingleFieldDto.getFieldValue() instanceof List) {
                     ticketToBeUpdated.setDevsAssigned(developerService.fetchAllDevelopersByIdList((List<String>) updateTicketSingleFieldDto.getFieldValue()));
                 } else {
                     throw new ClassCastException("The data type of the list of the ids provided is inappropriate. A list of strings is needed");
@@ -115,7 +127,7 @@ public class TicketService {
         return getTicketMapper.map(ticketRepository.save(ticketToBeUpdated));
     }
 
-    public GetTicketDto updateMultipleFieldsOfATicket(String id, UpdateTicketMultipleFieldsDto updateTicketMultipleFieldsDto) throws EntityNotFoundException{
+    public GetTicketDto updateMultipleFieldsOfATicket(String id, UpdateTicketMultipleFieldsDto updateTicketMultipleFieldsDto) throws EntityNotFoundException {
         Ticket ticketToBeUpdated = fetchTicketIfItExists(id);
         ticketToBeUpdated.setTitle(updateTicketMultipleFieldsDto.getTitle());
         ticketToBeUpdated.setDescription(updateTicketMultipleFieldsDto.getDescription());
@@ -134,10 +146,10 @@ public class TicketService {
 
     private Ticket fetchTicketIfItExists(String id) {
         Optional<Ticket> optionalTicket = ticketRepository.findById(id);
-        if(optionalTicket.isPresent()) {
+        if (optionalTicket.isPresent()) {
             return optionalTicket.get();
         } else {
-            throw new EntityNotFoundException("Ticket with id '" + id +"' not found");
+            throw new EntityNotFoundException("Ticket with id '" + id + "' not found");
         }
     }
 }

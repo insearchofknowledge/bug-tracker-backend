@@ -25,6 +25,12 @@ public class DeveloperService {
     private final GetDeveloperMapper getDeveloperMapper;
     private final AddDeveloperMapper addDeveloperMapper;
 
+    public GetDeveloperDto createNewDeveloper(AddDeveloperDto addDeveloperDto) {
+        Developer newDeveloper = addDeveloperMapper.map(addDeveloperDto);
+        newDeveloper.setRole("Developer");
+        return getDeveloperMapper.map(developerRepository.save(newDeveloper));
+    }
+
     public GetDeveloperDto fetchDeveloperById(String id) {
         return getDeveloperMapper.map(fetchDeveloperIfItExists(id));
     }
@@ -39,12 +45,6 @@ public class DeveloperService {
             throw new EntityNotFoundException("Some requested Developers couldn't be found. Either Developer with given Id doesn't exist or the Id is wrong");
         }
         return retrievedDevsList;
-    }
-
-    public GetDeveloperDto addNewDeveloper(AddDeveloperDto addDeveloperDto) {
-        Developer newDeveloper = addDeveloperMapper.map(addDeveloperDto);
-        newDeveloper.setRole("Developer");
-        return getDeveloperMapper.map(developerRepository.save(newDeveloper));
     }
 
     public GetDeveloperDto updateSingleFieldOfADeveloper(String developerId, UpdateDeveloperSingleFieldDto updateDeveloperSingleFieldDto) throws NoSuchFieldException {

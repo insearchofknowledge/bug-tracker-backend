@@ -1,6 +1,5 @@
 package com.insearchofknowledge.bugTracker.project.projectMapper;
 
-import com.insearchofknowledge.bugTracker.comment.GetCommentMapper;
 import com.insearchofknowledge.bugTracker.developer.developerMapper.GetDeveloperMapper;
 import com.insearchofknowledge.bugTracker.developer.developerMapper.GetDeveloperSimplifiedDtoMapper;
 import com.insearchofknowledge.bugTracker.generics.Mapper;

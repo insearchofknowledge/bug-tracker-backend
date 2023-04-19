@@ -20,14 +20,20 @@ public class TicketController {
     private final TicketService ticketService;
 
     @PostMapping("/add")
-    public ResponseEntity<GetTicketDto> addTicket(@RequestBody  @Valid AddTicketDto addTicketDto){
-        GetTicketDto getTicketDto = ticketService.addNewTicket(addTicketDto);
+    public ResponseEntity<GetTicketDto> addTicket(@RequestBody @Valid AddTicketDto addTicketDto) {
+        GetTicketDto getTicketDto = ticketService.createNewTicket(addTicketDto);
         return new ResponseEntity<>(getTicketDto, HttpStatus.CREATED);
+    }
+
+    @GetMapping("{ticketId}")
+    public ResponseEntity<GetTicketDto> getTicketById(@PathVariable("ticketId") String ticketId) {
+        GetTicketDto ticket = ticketService.fetchTicketById(ticketId);
+        return ResponseEntity.ok(ticket);
     }
 
     @GetMapping("/allTickets")
     public ResponseEntity<List<GetTicketDto>> getAllTickets() {
-        List<GetTicketDto> tickets = ticketService.findAllTickets();
+        List<GetTicketDto> tickets = ticketService.fetchAllTickets();
         return ResponseEntity.ok(tickets);
     }
 

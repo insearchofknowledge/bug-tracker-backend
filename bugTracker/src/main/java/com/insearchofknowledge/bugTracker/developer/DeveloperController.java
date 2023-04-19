@@ -20,8 +20,8 @@ public class DeveloperController {
     private final DeveloperService developerService;
 
     @PostMapping("/create")
-    public ResponseEntity<GetDeveloperDto> createDeveloper(@RequestBody @Valid AddDeveloperDto addDeveloperDto) {
-        GetDeveloperDto getDeveloperDto = developerService.addNewDeveloper(addDeveloperDto);
+    public ResponseEntity<GetDeveloperDto> addDeveloper(@RequestBody @Valid AddDeveloperDto addDeveloperDto) {
+        GetDeveloperDto getDeveloperDto = developerService.createNewDeveloper(addDeveloperDto);
         return ResponseEntity.ok(getDeveloperDto);
     }
 

@@ -1,6 +1,6 @@
 package com.insearchofknowledge.bugTracker.ticket.ticketDto;
 
-import com.insearchofknowledge.bugTracker.comment.GetCommentDto;
+import com.insearchofknowledge.bugTracker.comment.commentDto.GetCommentDto;
 import com.insearchofknowledge.bugTracker.developer.developerDto.GetDeveloperSimplifiedDto;
 import com.insearchofknowledge.bugTracker.project.projectDto.GetProjectDto;
 import com.insearchofknowledge.bugTracker.ticket.ticketEnum.TicketPriority;

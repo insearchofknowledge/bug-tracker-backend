@@ -1,5 +1,7 @@
-package com.insearchofknowledge.bugTracker.comment;
+package com.insearchofknowledge.bugTracker.comment.commentMapper;
 
+import com.insearchofknowledge.bugTracker.comment.Comment;
+import com.insearchofknowledge.bugTracker.comment.commentDto.AddCommentDto;
 import com.insearchofknowledge.bugTracker.developer.DeveloperRepository;
 import com.insearchofknowledge.bugTracker.generics.Mapper;
 import com.insearchofknowledge.bugTracker.ticket.TicketRepository;

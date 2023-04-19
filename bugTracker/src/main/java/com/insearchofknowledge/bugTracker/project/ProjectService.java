@@ -9,7 +9,6 @@ import com.insearchofknowledge.bugTracker.project.projectMapper.AddProjectMapper
 import com.insearchofknowledge.bugTracker.project.projectMapper.GetProjectMapper;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -26,7 +25,7 @@ public class ProjectService {
     private final GetProjectMapper getProjectMapper;
     private final DeveloperService developerService;
 
-    public GetProjectDto createProject(AddProjectDto addProjectDto) {
+    public GetProjectDto createNewProject(AddProjectDto addProjectDto) {
         Project newProject = addProjectMapper.map(addProjectDto);
         if (newProject.getStartDate() == null) {
             newProject.setStartDate(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS));
