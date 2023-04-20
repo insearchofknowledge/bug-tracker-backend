@@ -2,7 +2,7 @@ package com.insearchofknowledge.bugTracker.ticket.ticketDto;
 
 import com.insearchofknowledge.bugTracker.comment.commentDto.GetCommentDto;
 import com.insearchofknowledge.bugTracker.developer.developerDto.GetDeveloperSimplifiedDto;
-import com.insearchofknowledge.bugTracker.project.projectDto.GetProjectDto;
+import com.insearchofknowledge.bugTracker.project.projectDto.GetProjectDetailedDto;
 import com.insearchofknowledge.bugTracker.ticket.ticketEnum.TicketPriority;
 import com.insearchofknowledge.bugTracker.ticket.ticketEnum.TicketStatus;
 import com.insearchofknowledge.bugTracker.ticket.ticketEnum.TypeOfTicket;
@@ -16,7 +16,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @AllArgsConstructor
 @Builder
-public class GetTicketDto {
+public class GetTicketDetailedDto {
 
     private String id;
     private String title;
@@ -29,5 +29,5 @@ public class GetTicketDto {
     private GetDeveloperSimplifiedDto author;  // SimplifiedDto reduce excessive data traffic and to avoid StackOverFlow
     private List<GetDeveloperSimplifiedDto> devsAssigned;  // SimplifiedDto reduce excessive data traffic and to avoid StackOverFlow
     private List<GetCommentDto> comments;
-    private GetProjectDto project;
+    private GetProjectDetailedDto project;
 }

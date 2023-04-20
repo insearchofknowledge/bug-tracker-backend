@@ -1,12 +1,11 @@
 package com.insearchofknowledge.bugTracker.project;
 
+import com.insearchofknowledge.bugTracker.developer.Developer;
 import com.insearchofknowledge.bugTracker.developer.DeveloperService;
-import com.insearchofknowledge.bugTracker.project.projectDto.AddProjectDto;
-import com.insearchofknowledge.bugTracker.project.projectDto.GetProjectDto;
-import com.insearchofknowledge.bugTracker.project.projectDto.UpdateProjectSingleFieldDto;
-import com.insearchofknowledge.bugTracker.project.projectDto.UpdateProjectTeamDto;
+import com.insearchofknowledge.bugTracker.project.projectDto.*;
 import com.insearchofknowledge.bugTracker.project.projectMapper.AddProjectMapper;
-import com.insearchofknowledge.bugTracker.project.projectMapper.GetProjectMapper;
+import com.insearchofknowledge.bugTracker.project.projectMapper.GetProjectDetailedMapper;
+import com.insearchofknowledge.bugTracker.project.projectMapper.GetProjectSimplifiedMapper;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -22,27 +21,33 @@ public class ProjectService {
 
     private final ProjectRepository projectRepository;
     private final AddProjectMapper addProjectMapper;
-    private final GetProjectMapper getProjectMapper;
+    private final GetProjectDetailedMapper getProjectDetailedMapper;
+    private final GetProjectSimplifiedMapper getProjectSimplifiedMapper;
     private final DeveloperService developerService;
 
-    public GetProjectDto createNewProject(AddProjectDto addProjectDto) {
+    public GetProjectDetailedDto createNewProject(AddProjectDto addProjectDto) {
         Project newProject = addProjectMapper.map(addProjectDto);
         if (newProject.getStartDate() == null) {
             newProject.setStartDate(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS));
         }
-        return getProjectMapper.map(projectRepository.save(newProject));
+        return getProjectDetailedMapper.map(projectRepository.save(newProject));
     }
 
-    public GetProjectDto fetchProjectById(String projectId) {
+    public GetProjectDetailedDto fetchProjectById(String projectId) {
         Project fetchedProject = fetchProjectIfItExists(projectId);
-        return getProjectMapper.map(fetchedProject);
+        return getProjectDetailedMapper.map(fetchedProject);
     }
 
-    public List<GetProjectDto> fetchAllProjects() {
-        return projectRepository.findAll().stream().map(getProjectMapper::map).toList();
+    public List<GetProjectSimplifiedDto> fetchAllProjects() {
+        return projectRepository.findAll().stream().map(getProjectSimplifiedMapper::map).toList();
     }
 
-    public GetProjectDto updateSingleFieldOfAProject(String projectId, UpdateProjectSingleFieldDto updateProjectSingleFieldDto) throws NoSuchFieldException {
+    public List<GetProjectSimplifiedDto> fetchAllProjectsThisDeveloperIsPartOf(String developerId) {
+        developerService.checkIfDeveloperIdExists(developerId);
+        return projectRepository.findByAssignedTeamId(developerId).stream().map(getProjectSimplifiedMapper::map).toList();
+    }
+
+    public GetProjectDetailedDto updateSingleFieldOfAProject(String projectId, UpdateProjectSingleFieldDto updateProjectSingleFieldDto) throws NoSuchFieldException {
         Project projectToBeUpdated = fetchProjectIfItExists(projectId);
 
         switch (updateProjectSingleFieldDto.getFieldName()) {
@@ -61,13 +66,13 @@ public class ProjectService {
             default:
                 throw new NoSuchFieldException("Invalid field name, or specified field is not to be modified");
         }
-        return getProjectMapper.map(projectRepository.save(projectToBeUpdated));
+        return getProjectDetailedMapper.map(projectRepository.save(projectToBeUpdated));
     }
 
-    public GetProjectDto updateTeamAssignedToProject(String projectId, UpdateProjectTeamDto updateProjectTeamDto) {
+    public GetProjectDetailedDto updateTeamAssignedToProject(String projectId, UpdateProjectTeamDto updateProjectTeamDto) {
         Project projectToBeUpdated = fetchProjectIfItExists(projectId);
         projectToBeUpdated.setAssignedTeam(developerService.fetchAllDevelopersByIdList(updateProjectTeamDto.getAssignedTeam()));
-        return getProjectMapper.map(projectRepository.save(projectToBeUpdated));
+        return getProjectDetailedMapper.map(projectRepository.save(projectToBeUpdated));
 
     }
 

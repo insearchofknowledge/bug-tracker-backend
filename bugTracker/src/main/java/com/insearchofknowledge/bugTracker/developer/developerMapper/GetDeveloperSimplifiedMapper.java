@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @NoArgsConstructor
-public class GetDeveloperSimplifiedDtoMapper implements Mapper<Developer, GetDeveloperSimplifiedDto> {
+public class GetDeveloperSimplifiedMapper implements Mapper<Developer, GetDeveloperSimplifiedDto> {
 
     @Override
     public GetDeveloperSimplifiedDto map(Developer developer) {

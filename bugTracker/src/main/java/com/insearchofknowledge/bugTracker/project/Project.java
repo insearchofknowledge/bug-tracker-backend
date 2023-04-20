@@ -38,10 +38,10 @@ public class Project {
     private LocalDateTime startDate;
     private LocalDateTime deadline;
 
-    @OneToMany(mappedBy =  "project")
+    @OneToMany(mappedBy =  "project", fetch = FetchType.LAZY)
     private Set<Ticket> tickets;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "developersOnTeamForProject",
             joinColumns = @JoinColumn(name = "projectId"),

@@ -1,7 +1,7 @@
 package com.insearchofknowledge.bugTracker.ticket;
 
 import com.insearchofknowledge.bugTracker.ticket.ticketDto.AddTicketDto;
-import com.insearchofknowledge.bugTracker.ticket.ticketDto.GetTicketDto;
+import com.insearchofknowledge.bugTracker.ticket.ticketDto.GetTicketDetailedDto;
 import com.insearchofknowledge.bugTracker.ticket.ticketDto.UpdateTicketMultipleFieldsDto;
 import com.insearchofknowledge.bugTracker.ticket.ticketDto.UpdateTicketSingleFieldDto;
 import jakarta.validation.Valid;
@@ -20,32 +20,32 @@ public class TicketController {
     private final TicketService ticketService;
 
     @PostMapping("/add")
-    public ResponseEntity<GetTicketDto> addTicket(@RequestBody @Valid AddTicketDto addTicketDto) {
-        GetTicketDto getTicketDto = ticketService.createNewTicket(addTicketDto);
-        return new ResponseEntity<>(getTicketDto, HttpStatus.CREATED);
+    public ResponseEntity<GetTicketDetailedDto> addTicket(@RequestBody @Valid AddTicketDto addTicketDto) {
+        GetTicketDetailedDto getTicketDetailedDto = ticketService.createNewTicket(addTicketDto);
+        return new ResponseEntity<>(getTicketDetailedDto, HttpStatus.CREATED);
     }
 
     @GetMapping("{ticketId}")
-    public ResponseEntity<GetTicketDto> getTicketById(@PathVariable("ticketId") String ticketId) {
-        GetTicketDto ticket = ticketService.fetchTicketById(ticketId);
+    public ResponseEntity<GetTicketDetailedDto> getTicketById(@PathVariable("ticketId") String ticketId) {
+        GetTicketDetailedDto ticket = ticketService.fetchTicketById(ticketId);
         return ResponseEntity.ok(ticket);
     }
 
     @GetMapping("/allTickets")
-    public ResponseEntity<List<GetTicketDto>> getAllTickets() {
-        List<GetTicketDto> tickets = ticketService.fetchAllTickets();
+    public ResponseEntity<List<GetTicketDetailedDto>> getAllTickets() {
+        List<GetTicketDetailedDto> tickets = ticketService.fetchAllTickets();
         return ResponseEntity.ok(tickets);
     }
 
     @PatchMapping("/update/{ticketId}")
-    public ResponseEntity<GetTicketDto> editASingleFieldOfATicket(@PathVariable("ticketId") String id, @RequestBody @Valid UpdateTicketSingleFieldDto updateTicketSingleFieldDto) throws NoSuchFieldException {
-        GetTicketDto updatedTicketDto = ticketService.updateSingleFieldOfATicket(id, updateTicketSingleFieldDto);
+    public ResponseEntity<GetTicketDetailedDto> editASingleFieldOfATicket(@PathVariable("ticketId") String id, @RequestBody @Valid UpdateTicketSingleFieldDto updateTicketSingleFieldDto) throws NoSuchFieldException {
+        GetTicketDetailedDto updatedTicketDto = ticketService.updateSingleFieldOfATicket(id, updateTicketSingleFieldDto);
         return ResponseEntity.ok(updatedTicketDto);
     }
 
     @PatchMapping("/updateFields/{ticketId}")
-    public ResponseEntity<GetTicketDto> editMultipleFieldsOfATicket(@PathVariable("ticketId") String id, @RequestBody @Valid UpdateTicketMultipleFieldsDto updateTicketMultipleFieldsDto) {
-        GetTicketDto updatedTicketDto = ticketService.updateMultipleFieldsOfATicket(id, updateTicketMultipleFieldsDto);
+    public ResponseEntity<GetTicketDetailedDto> editMultipleFieldsOfATicket(@PathVariable("ticketId") String id, @RequestBody @Valid UpdateTicketMultipleFieldsDto updateTicketMultipleFieldsDto) {
+        GetTicketDetailedDto updatedTicketDto = ticketService.updateMultipleFieldsOfATicket(id, updateTicketMultipleFieldsDto);
         return ResponseEntity.ok(updatedTicketDto);
     }
 

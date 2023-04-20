@@ -45,15 +45,15 @@ public class Developer {
     private String password;
     private String role;  // Admin, Project Leader, Developer
 
-    @OneToMany(mappedBy = "author")
+    @OneToMany(mappedBy = "author", fetch = FetchType.LAZY)
     private List<Ticket> ticketsCreated = new ArrayList<>();
 
-    @ManyToMany(mappedBy = "devsAssigned")
+    @ManyToMany(mappedBy = "devsAssigned", fetch = FetchType.LAZY)
     private List<Ticket> assignedTickets;
 
-    @ManyToMany(mappedBy = "assignedTeam")
+    @ManyToMany(mappedBy = "assignedTeam", fetch = FetchType.LAZY)
     private List<Project> projects;
 
-    @OneToMany(mappedBy = "commentAuthor")
+    @OneToMany(mappedBy = "commentAuthor", fetch = FetchType.LAZY)
     private List<Comment> comments;
 }

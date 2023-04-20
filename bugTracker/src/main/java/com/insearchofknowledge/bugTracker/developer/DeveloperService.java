@@ -95,6 +95,12 @@ public class DeveloperService {
         developerRepository.delete(fetchDeveloperIfItExists(developerId));
     }
 
+    public void checkIfDeveloperIdExists(String idToBeChecked) {
+       if(!developerRepository.existsById(idToBeChecked)) {
+           throw new EntityNotFoundException("Developer with id '" + idToBeChecked + "' not found");
+       }
+    }
+
     private Developer fetchDeveloperIfItExists(String id) {
         Optional<Developer> optionalDeveloper = developerRepository.findById(id);
         if(optionalDeveloper.isPresent()) {

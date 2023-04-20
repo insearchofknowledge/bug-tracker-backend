@@ -5,16 +5,15 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Getter
 @Setter
 @NoArgsConstructor
-public class AddProjectDto {
+public class GetProjectSimplifiedDto {
 
+    private String id;
     private String name;
     private String description;
     private LocalDateTime startDate;
     private LocalDateTime deadline;
-    private List<String> assignedTeam;
 }

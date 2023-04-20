@@ -59,7 +59,7 @@ public class Ticket {
     @NotNull(message = "Author required")
     private Developer author;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
             @JoinTable(
                     name = "DevsAssignedToTicket",
                     joinColumns = @JoinColumn(name = "ticketId"),
@@ -67,7 +67,7 @@ public class Ticket {
             )
     private List<Developer> devsAssigned;
 
-    @OneToMany(mappedBy = "ticket")
+    @OneToMany(mappedBy = "ticket", fetch = FetchType.LAZY)
     private List<Comment> comments;
 
     @ManyToOne

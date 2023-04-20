@@ -1,8 +1,8 @@
 package com.insearchofknowledge.bugTracker.developer.developerDto;
 
 import com.insearchofknowledge.bugTracker.comment.commentDto.GetCommentDto;
-import com.insearchofknowledge.bugTracker.project.projectDto.GetProjectDto;
-import com.insearchofknowledge.bugTracker.ticket.ticketDto.GetTicketDto;
+import com.insearchofknowledge.bugTracker.project.projectDto.GetProjectDetailedDto;
+import com.insearchofknowledge.bugTracker.ticket.ticketDto.GetTicketDetailedDto;
 import lombok.*;
 
 import java.util.List;
@@ -18,7 +18,7 @@ public class GetDeveloperDto {
     private String phone;
     private String email;
     private String role;
-    private List<GetTicketDto> ticketsCreated;
-    private List<GetProjectDto> projects;
+    private List<GetTicketDetailedDto> ticketsCreated;
+    private List<GetProjectDetailedDto> projects;
     private List<GetCommentDto> comments;
 }
