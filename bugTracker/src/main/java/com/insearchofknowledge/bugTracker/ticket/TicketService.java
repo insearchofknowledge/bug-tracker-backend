@@ -47,10 +47,9 @@ public class TicketService {
         return ticketRepository.findAll().stream().map(getTicketDetailedMapper::map).toList();
     }
 
-    public List<Comment> fetchCommentsForTicket(String ticketId) {
+    public List<Comment> fetchCommentsForTicket(String ticketId) throws EntityNotFoundException{
         Ticket ticket = fetchTicketIfItExists(ticketId);
-        List<Comment> comments = ticket.getComments();
-        return comments;
+        return ticket.getComments();
     }
 
     public GetTicketDetailedDto updateSingleFieldOfATicket(String id, UpdateTicketSingleFieldDto updateTicketSingleFieldDto) throws EntityNotFoundException, NoSuchFieldException, ClassCastException {
@@ -75,11 +74,11 @@ public class TicketService {
                 if (updateTicketSingleFieldDto.getFieldValue() instanceof List) {
                     ticketToBeUpdated.setDevsAssigned(developerService.fetchAllDevelopersByIdList((List<String>) updateTicketSingleFieldDto.getFieldValue()));
                 } else {
-                    throw new ClassCastException("The data type of the list of the ids provided is inappropriate. A list of strings is needed");
+                    throw new ClassCastException("The data type of the list of the ids provided is inappropriate. A list of strings is needed.");
                 }
                 break;
             default:
-                throw new NoSuchFieldException("Invalid field name, or specified field is not to be modified");
+                throw new NoSuchFieldException("Invalid field name, or specified field is not to be modified.");
         }
         ticketToBeUpdated.setLastDateModified(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS));
         return getTicketDetailedMapper.map(ticketRepository.save(ticketToBeUpdated));
@@ -97,16 +96,16 @@ public class TicketService {
         return getTicketDetailedMapper.map(ticketRepository.save(ticketToBeUpdated));
     }
 
-    public void deleteTicket(String id) {
+    public void deleteTicket(String id) throws EntityNotFoundException{
         ticketRepository.delete(fetchTicketIfItExists(id));
     }
 
-    private Ticket fetchTicketIfItExists(String id) {
+    private Ticket fetchTicketIfItExists(String id) throws EntityNotFoundException {
         Optional<Ticket> optionalTicket = ticketRepository.findById(id);
         if (optionalTicket.isPresent()) {
             return optionalTicket.get();
         } else {
-            throw new EntityNotFoundException("Ticket with id '" + id + "' not found");
+            throw new EntityNotFoundException("Ticket with id '" + id + "' not found.");
         }
     }
 }

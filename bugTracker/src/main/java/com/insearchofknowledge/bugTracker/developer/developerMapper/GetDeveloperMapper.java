@@ -4,8 +4,8 @@ import com.insearchofknowledge.bugTracker.comment.commentMapper.GetCommentMapper
 import com.insearchofknowledge.bugTracker.developer.Developer;
 import com.insearchofknowledge.bugTracker.developer.developerDto.GetDeveloperDto;
 import com.insearchofknowledge.bugTracker.generics.Mapper;
-import com.insearchofknowledge.bugTracker.project.projectMapper.GetProjectDetailedMapper;
-import com.insearchofknowledge.bugTracker.ticket.ticketMapper.GetTicketDetailedMapper;
+import com.insearchofknowledge.bugTracker.project.projectMapper.GetProjectSimplifiedMapper;
+import com.insearchofknowledge.bugTracker.ticket.ticketMapper.GetTicketSimplifiedMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -13,8 +13,8 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class GetDeveloperMapper implements Mapper<Developer, GetDeveloperDto> {
 
-    private final GetTicketDetailedMapper getTicketDetailedMapper;
-    private final GetProjectDetailedMapper getProjectDetailedMapper;
+    private final GetTicketSimplifiedMapper getTicketSimplifiedMapper;
+    private final GetProjectSimplifiedMapper getProjectSimplifiedMapper;
     private final GetCommentMapper getCommentMapper;
 
     @Override
@@ -27,10 +27,10 @@ public class GetDeveloperMapper implements Mapper<Developer, GetDeveloperDto> {
         getDeveloperDto.setEmail(entity.getEmail());
         getDeveloperDto.setRole(entity.getRole());
         if (entity.getTicketsCreated() != null) {
-            getDeveloperDto.setTicketsCreated(entity.getTicketsCreated().stream().map(getTicketDetailedMapper::map).toList());
+            getDeveloperDto.setTicketsCreated(entity.getTicketsCreated().stream().map(getTicketSimplifiedMapper::map).toList());
         }
         if (entity.getProjects() != null) {
-            getDeveloperDto.setProjects(entity.getProjects().stream().map(getProjectDetailedMapper::map).toList());
+            getDeveloperDto.setProjects(entity.getProjects().stream().map(getProjectSimplifiedMapper::map).toList());
         }
         if (entity.getComments() != null) {
             getDeveloperDto.setComments(entity.getComments().stream().map(getCommentMapper::map).toList());

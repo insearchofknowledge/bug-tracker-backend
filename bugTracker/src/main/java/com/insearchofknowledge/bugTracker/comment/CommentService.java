@@ -31,28 +31,27 @@ public class CommentService {
         return getCommentMapper.map(commentRepository.save(comment));
     }
 
-    public GetCommentDto fetchCommentById(String commentId) {
+    public GetCommentDto fetchCommentById(String commentId) throws EntityNotFoundException{
         Comment comment = fetchCommentIfItExists(commentId);
         return getCommentMapper.map(comment);
     }
 
     public List<GetCommentDto> fetchAllCommentsByTicketId(String ticketId) {
-        List<GetCommentDto> comments = ticketService.fetchCommentsForTicket(ticketId).stream().map(getCommentMapper::map).toList();
-        return comments;
+        return ticketService.fetchCommentsForTicket(ticketId).stream().map(getCommentMapper::map).toList();
     }
 
-    public GetCommentDto updateComment(String commentId, UpdateCommentDto updateCommentDto) {
+    public GetCommentDto updateComment(String commentId, UpdateCommentDto updateCommentDto) throws EntityNotFoundException {
         Comment commentToBeUpdated = fetchCommentIfItExists(commentId);
         commentToBeUpdated.setContent(updateCommentDto.getContent());
         commentToBeUpdated.setWasEdited(true);
         return getCommentMapper.map(commentRepository.save(commentToBeUpdated));
     }
 
-    public void deleteComment(String commentId) {
+    public void deleteComment(String commentId) throws EntityNotFoundException {
         commentRepository.delete(fetchCommentIfItExists(commentId));
     }
 
-    private Comment fetchCommentIfItExists(String commentId) {
+    private Comment fetchCommentIfItExists(String commentId) throws EntityNotFoundException{
         Optional<Comment> commentOptional = commentRepository.findById(commentId);
         if (commentOptional.isPresent()) {
             return commentOptional.get();

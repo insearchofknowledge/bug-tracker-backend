@@ -1,11 +1,9 @@
 package com.insearchofknowledge.bugTracker.developer;
 
-import com.insearchofknowledge.bugTracker.developer.developerDto.AddDeveloperDto;
-import com.insearchofknowledge.bugTracker.developer.developerDto.GetDeveloperDto;
-import com.insearchofknowledge.bugTracker.developer.developerDto.UpdateDeveloperMultipleFieldsDto;
-import com.insearchofknowledge.bugTracker.developer.developerDto.UpdateDeveloperSingleFieldDto;
+import com.insearchofknowledge.bugTracker.developer.developerDto.*;
 import com.insearchofknowledge.bugTracker.developer.developerMapper.AddDeveloperMapper;
 import com.insearchofknowledge.bugTracker.developer.developerMapper.GetDeveloperMapper;
+import com.insearchofknowledge.bugTracker.developer.developerMapper.GetDeveloperSimplifiedMapper;
 import com.insearchofknowledge.bugTracker.project.Project;
 import com.insearchofknowledge.bugTracker.ticket.Ticket;
 import jakarta.persistence.EntityNotFoundException;
@@ -23,6 +21,7 @@ public class DeveloperService {
 
     private final DeveloperRepository developerRepository;
     private final GetDeveloperMapper getDeveloperMapper;
+    private final GetDeveloperSimplifiedMapper getDeveloperSimplifiedMapper;
     private final AddDeveloperMapper addDeveloperMapper;
 
     public GetDeveloperDto createNewDeveloper(AddDeveloperDto addDeveloperDto) {
@@ -35,8 +34,8 @@ public class DeveloperService {
         return getDeveloperMapper.map(fetchDeveloperIfItExists(id));
     }
 
-    public List<GetDeveloperDto> fetchAllDevelopers() {
-        return developerRepository.findAll().stream().map(getDeveloperMapper::map).toList();
+    public List<GetDeveloperSimplifiedDto> fetchAllDevelopers() {
+        return developerRepository.findAll().stream().map(getDeveloperSimplifiedMapper::map).toList();
     }
 
     public List<Developer> fetchAllDevelopersByIdList(List<String> developerIds) {
@@ -63,7 +62,7 @@ public class DeveloperService {
                 developerToBeUpdated.setEmail(updateDeveloperSingleFieldDto.getFieldValue());
                 break;
             default:
-                throw new NoSuchFieldException("Invalid field name or specified field is not to be modified");
+                throw new NoSuchFieldException("Invalid field name or specified field is not to be modified.");
         }
         return getDeveloperMapper.map(developerRepository.save(developerToBeUpdated));
     }

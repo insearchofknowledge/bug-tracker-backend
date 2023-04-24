@@ -1,9 +1,6 @@
 package com.insearchofknowledge.bugTracker.developer;
 
-import com.insearchofknowledge.bugTracker.developer.developerDto.AddDeveloperDto;
-import com.insearchofknowledge.bugTracker.developer.developerDto.GetDeveloperDto;
-import com.insearchofknowledge.bugTracker.developer.developerDto.UpdateDeveloperMultipleFieldsDto;
-import com.insearchofknowledge.bugTracker.developer.developerDto.UpdateDeveloperSingleFieldDto;
+import com.insearchofknowledge.bugTracker.developer.developerDto.*;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -32,13 +29,13 @@ public class DeveloperController {
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<GetDeveloperDto>> getAllDevelopers() {
-        List<GetDeveloperDto> listOfDeveloperDto = developerService.fetchAllDevelopers();
+    public ResponseEntity<List<GetDeveloperSimplifiedDto>> getAllDevelopers() {
+        List<GetDeveloperSimplifiedDto> listOfDeveloperDto = developerService.fetchAllDevelopers();
         return ResponseEntity.ok(listOfDeveloperDto);
     }
 
     @PatchMapping("/update/{developerId}")
-    public ResponseEntity<GetDeveloperDto> editSingleFieldOfADeveloper(@PathVariable("developerId") String id, @RequestBody UpdateDeveloperSingleFieldDto updateDeveloperSingleFieldDto) throws NoSuchFieldException{
+    public ResponseEntity<GetDeveloperDto> editSingleFieldOfADeveloper(@PathVariable("developerId") String id, @RequestBody UpdateDeveloperSingleFieldDto updateDeveloperSingleFieldDto) throws NoSuchFieldException {
         GetDeveloperDto editedDeveloper = developerService.updateSingleFieldOfADeveloper(id, updateDeveloperSingleFieldDto);
         return ResponseEntity.ok(editedDeveloper);
     }

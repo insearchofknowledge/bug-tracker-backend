@@ -89,5 +89,4 @@ public class ProjectService {
             throw new EntityNotFoundException("Project with id '" + projectId + "' not found");
         }
     }
-
 }

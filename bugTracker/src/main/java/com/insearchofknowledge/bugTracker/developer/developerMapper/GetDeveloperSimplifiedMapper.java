@@ -13,9 +13,9 @@ public class GetDeveloperSimplifiedMapper implements Mapper<Developer, GetDevelo
     @Override
     public GetDeveloperSimplifiedDto map(Developer developer) {
         return GetDeveloperSimplifiedDto.builder()
+                .id(developer.getId())
                 .firstName(developer.getFirstName())
                 .lastName(developer.getLastName())
-                .phone(developer.getPhone())
                 .email(developer.getEmail())
                 .build();
     }

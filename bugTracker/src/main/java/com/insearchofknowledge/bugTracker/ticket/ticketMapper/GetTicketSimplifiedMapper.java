@@ -4,12 +4,14 @@ import com.insearchofknowledge.bugTracker.developer.developerMapper.GetDeveloper
 import com.insearchofknowledge.bugTracker.generics.Mapper;
 import com.insearchofknowledge.bugTracker.ticket.Ticket;
 import com.insearchofknowledge.bugTracker.ticket.ticketDto.GetTicketSimplifiedDto;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class GetTicketSimplifiedMapper implements Mapper<Ticket, GetTicketSimplifiedDto> {
 
-    GetDeveloperSimplifiedMapper getDeveloperSimplifiedMapper;
+    private final GetDeveloperSimplifiedMapper getDeveloperSimplifiedMapper;
 
     @Override
     public GetTicketSimplifiedDto map(Ticket ticket) {
