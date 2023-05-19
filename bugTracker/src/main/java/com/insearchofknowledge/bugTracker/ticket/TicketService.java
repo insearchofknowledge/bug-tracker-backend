@@ -2,15 +2,13 @@ package com.insearchofknowledge.bugTracker.ticket;
 
 import com.insearchofknowledge.bugTracker.comment.Comment;
 import com.insearchofknowledge.bugTracker.developer.DeveloperService;
-import com.insearchofknowledge.bugTracker.ticket.ticketDto.AddTicketDto;
-import com.insearchofknowledge.bugTracker.ticket.ticketDto.GetTicketDetailedDto;
-import com.insearchofknowledge.bugTracker.ticket.ticketDto.UpdateTicketMultipleFieldsDto;
-import com.insearchofknowledge.bugTracker.ticket.ticketDto.UpdateTicketSingleFieldDto;
+import com.insearchofknowledge.bugTracker.ticket.ticketDto.*;
 import com.insearchofknowledge.bugTracker.ticket.ticketEnum.TicketPriority;
 import com.insearchofknowledge.bugTracker.ticket.ticketEnum.TicketStatus;
 import com.insearchofknowledge.bugTracker.ticket.ticketEnum.TypeOfTicket;
 import com.insearchofknowledge.bugTracker.ticket.ticketMapper.AddTicketMapper;
 import com.insearchofknowledge.bugTracker.ticket.ticketMapper.GetTicketDetailedMapper;
+import com.insearchofknowledge.bugTracker.ticket.ticketMapper.GetTicketSimplifiedMapper;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -26,15 +24,14 @@ public class TicketService {
 
     private final AddTicketMapper addTicketMapper;
     private final GetTicketDetailedMapper getTicketDetailedMapper;
+    private final GetTicketSimplifiedMapper getTicketSimplifiedMapper;
     private final TicketRepository ticketRepository;
     private final DeveloperService developerService;
 
     public GetTicketDetailedDto createNewTicket(AddTicketDto addTicketDto) {
         Ticket newTicket = addTicketMapper.map(addTicketDto);
         newTicket.setDateCreated(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS));
-        // we persist the ticket (before we add it to the list of the ticketsCreated by the author)
         ticketRepository.save(newTicket);
-        // we add the newly created ticket to the list of the created tickets by this developer (author)
         return getTicketDetailedMapper.map(newTicket);
     }
 
@@ -45,6 +42,16 @@ public class TicketService {
 
     public List<GetTicketDetailedDto> fetchAllTickets() {
         return ticketRepository.findAll().stream().map(getTicketDetailedMapper::map).toList();
+    }
+
+    public List<GetTicketSimplifiedDto> fetchTicketsByAuthor(String authorId) throws EntityNotFoundException {
+        developerService.checkIfDeveloperIdExists(authorId);
+        return ticketRepository.findByAuthorId(authorId).stream().map(getTicketSimplifiedMapper::map).toList();
+    }
+
+    public List<GetTicketSimplifiedDto> fetchTicketsAssignedToDev(String developerId) throws EntityNotFoundException {
+        developerService.checkIfDeveloperIdExists(developerId);
+        return ticketRepository.findByDevsAssignedId(developerId).stream().map(getTicketSimplifiedMapper::map).toList();
     }
 
     public List<Comment> fetchCommentsForTicket(String ticketId) throws EntityNotFoundException{

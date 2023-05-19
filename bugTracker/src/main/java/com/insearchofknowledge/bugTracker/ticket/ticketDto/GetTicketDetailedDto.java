@@ -30,4 +30,5 @@ public class GetTicketDetailedDto {
     private GetDeveloperSimplifiedDto author;  // SimplifiedDto reduce excessive data traffic and to avoid StackOverFlow
     private List<GetDeveloperSimplifiedDto> devsAssigned;  // SimplifiedDto reduce excessive data traffic and to avoid StackOverFlow
     private List<GetCommentDto> comments;
+    private String project;
 }

@@ -37,6 +37,7 @@ public class GetTicketDetailedMapper implements Mapper<Ticket, GetTicketDetailed
         if (entity.getComments() != null) {
             getTicketDetailedDto.setComments(entity.getComments().stream().map(getCommentMapper::map).toList());
         }
+        getTicketDetailedDto.setProject(entity.getProject().getId());
         return getTicketDetailedDto;
     }
 }

@@ -21,6 +21,7 @@ public class GetTicketSimplifiedMapper implements Mapper<Ticket, GetTicketSimpli
         getTicketSimplifiedDto.setDescription(ticket.getDescription());
         getTicketSimplifiedDto.setDateCreated(ticket.getDateCreated());
         getTicketSimplifiedDto.setAuthor(getDeveloperSimplifiedMapper.map(ticket.getAuthor()));
+        getTicketSimplifiedDto.setProject(ticket.getProject().getId());
         return getTicketSimplifiedDto;
     }
 }

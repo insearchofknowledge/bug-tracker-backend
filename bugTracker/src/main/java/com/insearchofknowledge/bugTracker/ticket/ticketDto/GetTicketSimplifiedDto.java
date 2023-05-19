@@ -15,4 +15,5 @@ public class GetTicketSimplifiedDto {
     private String description;
     private LocalDateTime dateCreated;
     private GetDeveloperSimplifiedDto author;
+    private String project;
 }

@@ -1,9 +1,6 @@
 package com.insearchofknowledge.bugTracker.ticket;
 
-import com.insearchofknowledge.bugTracker.ticket.ticketDto.AddTicketDto;
-import com.insearchofknowledge.bugTracker.ticket.ticketDto.GetTicketDetailedDto;
-import com.insearchofknowledge.bugTracker.ticket.ticketDto.UpdateTicketMultipleFieldsDto;
-import com.insearchofknowledge.bugTracker.ticket.ticketDto.UpdateTicketSingleFieldDto;
+import com.insearchofknowledge.bugTracker.ticket.ticketDto.*;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -34,6 +31,18 @@ public class TicketController {
     @GetMapping("/allTickets")
     public ResponseEntity<List<GetTicketDetailedDto>> getAllTickets() {
         List<GetTicketDetailedDto> tickets = ticketService.fetchAllTickets();
+        return ResponseEntity.ok(tickets);
+    }
+
+    @GetMapping("/author/{developerId}")
+    public ResponseEntity<List<GetTicketSimplifiedDto>> getAllByAuthor(@PathVariable("developerId") String developerId) {
+        List<GetTicketSimplifiedDto> tickets = ticketService.fetchTicketsByAuthor(developerId);
+        return ResponseEntity.ok(tickets);
+    }
+
+    @GetMapping("/assignedTo/{developerId}")
+    public ResponseEntity<List<GetTicketSimplifiedDto>> getAllTicketsAssignedToDev(@PathVariable("developerId") String developerId) {
+        List<GetTicketSimplifiedDto> tickets = ticketService.fetchTicketsAssignedToDev(developerId);
         return ResponseEntity.ok(tickets);
     }
 
