@@ -17,6 +17,7 @@ public class GetDeveloperSimplifiedMapper implements Mapper<Developer, GetDevelo
                 .firstName(developer.getFirstName())
                 .lastName(developer.getLastName())
                 .email(developer.getEmail())
+                .phone(developer.getPhone())
                 .build();
     }
 }
