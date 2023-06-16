@@ -1,9 +1,11 @@
 package com.insearchofknowledge.bugTracker.project;
 
+import com.insearchofknowledge.bugTracker.developer.Role;
 import com.insearchofknowledge.bugTracker.project.projectDto.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,7 +28,9 @@ public class ProjectController {
         return ResponseEntity.ok(getProjectDetailedDto);
     }
 
+
     @GetMapping("/all")
+    @Secured("ROLE_ADMIN")
     public ResponseEntity<List<GetProjectSimplifiedDto>> getAllProjects() {
         List<GetProjectSimplifiedDto> projectsDto = projectService.fetchAllProjects();
         return ResponseEntity.ok(projectsDto);

@@ -25,7 +25,7 @@ public class GetDeveloperMapper implements Mapper<Developer, GetDeveloperDto> {
         getDeveloperDto.setLastName(entity.getLastName());
         getDeveloperDto.setPhone(entity.getPhone());
         getDeveloperDto.setEmail(entity.getEmail());
-        getDeveloperDto.setRole(entity.getRole());
+//        getDeveloperDto.setRole(entity.getRole());
         if (entity.getTicketsCreated() != null) {
             getDeveloperDto.setTicketsCreated(entity.getTicketsCreated().stream().map(getTicketSimplifiedMapper::map).toList());
         }

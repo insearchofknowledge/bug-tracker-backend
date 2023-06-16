@@ -26,7 +26,7 @@ public class DeveloperService {
 
     public GetDeveloperDto createNewDeveloper(AddDeveloperDto addDeveloperDto) {
         Developer newDeveloper = addDeveloperMapper.map(addDeveloperDto);
-        newDeveloper.setRole("Developer");
+        newDeveloper.setRole(Role.ROLE_DEVELOPER);
         return getDeveloperMapper.map(developerRepository.save(newDeveloper));
     }
 
