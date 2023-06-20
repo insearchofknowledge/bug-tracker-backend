@@ -55,7 +55,7 @@ public class BeanConfiguration {
         return config.getAuthenticationManager();
     }
 
-    // connection with User Interface (Angular)
+//     connection with User Interface (Angular)
     @Bean
     public CorsFilter corsFilter() {
         CorsConfiguration corsConfiguration = new CorsConfiguration();

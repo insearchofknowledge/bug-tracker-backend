@@ -15,7 +15,7 @@ import org.springframework.security.web.authentication.logout.LogoutHandler;
 
 @Configuration
 @EnableWebSecurity
-@EnableMethodSecurity(securedEnabled = true)
+@EnableMethodSecurity(securedEnabled = true)  // for @Authorisation
 @RequiredArgsConstructor
 public class SecurityConfiguration {
 
@@ -26,14 +26,14 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
-                .csrf()
+                .cors().and().csrf()
                     .disable()
-                .authorizeHttpRequests() // I want to authorize all requests
+                .authorizeHttpRequests()                      // I want to authorize all requests
                     .requestMatchers("/api/auth/**") // that are enumerated here - WHITELIST
-                    .permitAll() // permit all for the above
-                .anyRequest() // anything else can only be accessed if user is
+                    .permitAll()     // permit all for the above
+                .anyRequest()        // anything else can only be accessed if user is
                     .authenticated() // AUTHENTICATED
-                .and()  // we should not store the authentication / session state to ensure each request is authenticated
+                .and()               // we should not store the authentication / session state to ensure each request is authenticated
                 .sessionManagement() // we will make stateless session so that each request SHOULD BE AUTHENTICATED
                     .sessionCreationPolicy(SessionCreationPolicy.STATELESS) // by creating a new session for each request
                 .and()
@@ -42,8 +42,14 @@ public class SecurityConfiguration {
                 .logout()
                     .logoutUrl("/api/auth/logout")
                     .addLogoutHandler(logoutHandler)
-                    .logoutSuccessHandler(((request, response, authentication) -> SecurityContextHolder.clearContext()));
-
+                    .logoutSuccessHandler(((request, response, authentication) -> SecurityContextHolder.clearContext()))
+                .and()
+                .headers()
+                    .addHeaderWriter((request, response) ->{
+                        response.setHeader("Access-Control-Allow-Origin", "http://localhost:4200");
+                        response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+                        response.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+                    });
         return httpSecurity.build();
     }
 }
