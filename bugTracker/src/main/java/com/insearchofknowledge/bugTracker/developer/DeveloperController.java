@@ -1,6 +1,7 @@
 package com.insearchofknowledge.bugTracker.developer;
 
 import com.insearchofknowledge.bugTracker.developer.developerDto.*;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -22,9 +23,10 @@ public class DeveloperController {
         return ResponseEntity.ok(getDeveloperDto);
     }
 
-    @GetMapping("/{developerId}")
-    public ResponseEntity<GetDeveloperDto> getDeveloperById(@PathVariable("developerId") String id) {
-        GetDeveloperDto getDeveloperDto = developerService.fetchDeveloperById(id);
+    @GetMapping("/profile")
+    public ResponseEntity<GetDeveloperDto> getDeveloperByToken(HttpServletRequest request) {
+//        String jwt = request.getHeader("Authorization").substring(7);
+        GetDeveloperDto getDeveloperDto = developerService.fetchDeveloperByToken(request);
         return ResponseEntity.ok(getDeveloperDto);
     }
 

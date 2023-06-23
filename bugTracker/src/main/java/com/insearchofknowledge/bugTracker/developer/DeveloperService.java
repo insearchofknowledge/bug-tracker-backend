@@ -6,7 +6,10 @@ import com.insearchofknowledge.bugTracker.developer.developerMapper.GetDeveloper
 import com.insearchofknowledge.bugTracker.developer.developerMapper.GetDeveloperSimplifiedMapper;
 import com.insearchofknowledge.bugTracker.project.Project;
 import com.insearchofknowledge.bugTracker.ticket.Ticket;
+import com.insearchofknowledge.bugTracker.token.Token;
+import com.insearchofknowledge.bugTracker.token.TokenRepository;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -23,6 +26,7 @@ public class DeveloperService {
     private final GetDeveloperMapper getDeveloperMapper;
     private final GetDeveloperSimplifiedMapper getDeveloperSimplifiedMapper;
     private final AddDeveloperMapper addDeveloperMapper;
+    private final TokenRepository tokenRepository;
 
     public GetDeveloperDto createNewDeveloper(AddDeveloperDto addDeveloperDto) {
         Developer newDeveloper = addDeveloperMapper.map(addDeveloperDto);
@@ -32,6 +36,11 @@ public class DeveloperService {
 
     public GetDeveloperDto fetchDeveloperById(String id) {
         return getDeveloperMapper.map(fetchDeveloperIfItExists(id));
+    }
+
+    public GetDeveloperDto fetchDeveloperByToken(HttpServletRequest request) {
+        String developerId = getDeveloperIdBasedOnToken(request);
+        return getDeveloperMapper.map(fetchDeveloperIfItExists(developerId));
     }
 
     public List<GetDeveloperSimplifiedDto> fetchAllDevelopers() {
@@ -84,6 +93,8 @@ public class DeveloperService {
     }
 
     // When creating a new project or when assigning a developer to a project - the projects field of that developer should also be updated
+    // thanks to the awesomeness of Spring Boot this method is redundat
+    // if the mapping is set up as it should be this update is performed automatically
     public void updateProjects(String developerId, Project project) throws EntityNotFoundException {
         Developer developer = fetchDeveloperIfItExists(developerId);
         developer.getProjects().add(project);
@@ -107,5 +118,11 @@ public class DeveloperService {
         } else {
             throw new EntityNotFoundException("Developer with id '" + id + "' not found");
         }
+    }
+
+    public String getDeveloperIdBasedOnToken(HttpServletRequest request) {
+        String jwt = request.getHeader("Authorization").substring(7);
+        String developerId = tokenRepository.findByToken(jwt).get().getDeveloper().getId();
+        return developerId;
     }
 }

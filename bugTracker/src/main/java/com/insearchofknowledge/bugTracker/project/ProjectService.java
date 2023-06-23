@@ -6,7 +6,10 @@ import com.insearchofknowledge.bugTracker.project.projectDto.*;
 import com.insearchofknowledge.bugTracker.project.projectMapper.AddProjectMapper;
 import com.insearchofknowledge.bugTracker.project.projectMapper.GetProjectDetailedMapper;
 import com.insearchofknowledge.bugTracker.project.projectMapper.GetProjectSimplifiedMapper;
+import com.insearchofknowledge.bugTracker.token.Token;
+import com.insearchofknowledge.bugTracker.token.TokenRepository;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -42,7 +45,13 @@ public class ProjectService {
         return projectRepository.findAll().stream().map(getProjectSimplifiedMapper::map).toList();
     }
 
-    public List<GetProjectSimplifiedDto> fetchAllProjectsThisDeveloperIsPartOf(String developerId) {
+//    public List<GetProjectSimplifiedDto> fetchAllProjectsThisDeveloperIsPartOf(String developerId) {
+//        developerService.checkIfDeveloperIdExists(developerId);
+//        return projectRepository.findByAssignedTeamId(developerId).stream().map(getProjectSimplifiedMapper::map).toList();
+//    }
+
+    public List<GetProjectSimplifiedDto> fetchAllProjectsThisDeveloperIsPartOf(HttpServletRequest request) {
+        String developerId = developerService.getDeveloperIdBasedOnToken(request);
         developerService.checkIfDeveloperIdExists(developerId);
         return projectRepository.findByAssignedTeamId(developerId).stream().map(getProjectSimplifiedMapper::map).toList();
     }

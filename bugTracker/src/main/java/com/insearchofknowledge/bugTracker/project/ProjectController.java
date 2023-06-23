@@ -2,6 +2,7 @@ package com.insearchofknowledge.bugTracker.project;
 
 import com.insearchofknowledge.bugTracker.developer.Role;
 import com.insearchofknowledge.bugTracker.project.projectDto.*;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,7 +30,6 @@ public class ProjectController {
         return ResponseEntity.ok(getProjectDetailedDto);
     }
 
-
     @GetMapping("/all")
     @Secured("ROLE_ADMIN")
     public ResponseEntity<List<GetProjectSimplifiedDto>> getAllProjects() {
@@ -37,9 +37,15 @@ public class ProjectController {
         return ResponseEntity.ok(projectsDto);
     }
 
-    @GetMapping("/myProjects/{devId}")
-    public ResponseEntity<List<GetProjectSimplifiedDto>> getAllProjectsThisUserIsPartOf(@PathVariable("devId") String developerId) {
-        List<GetProjectSimplifiedDto> projects = projectService.fetchAllProjectsThisDeveloperIsPartOf(developerId);
+//    @GetMapping("/myProjects/{devId}")
+//    public ResponseEntity<List<GetProjectSimplifiedDto>> getAllProjectsThisUserIsPartOf(@PathVariable("devId") String developerId) {
+//        List<GetProjectSimplifiedDto> projects = projectService.fetchAllProjectsThisDeveloperIsPartOf(developerId);
+//        return ResponseEntity.ok(projects);
+//    }
+
+    @GetMapping("/myProjects")
+    public ResponseEntity<List<GetProjectSimplifiedDto>> getAllProjectsThisUserIsPartOf(HttpServletRequest request) {
+        List<GetProjectSimplifiedDto> projects = projectService.fetchAllProjectsThisDeveloperIsPartOf(request);
         return ResponseEntity.ok(projects);
     }
 
