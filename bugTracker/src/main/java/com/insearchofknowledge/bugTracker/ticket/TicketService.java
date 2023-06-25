@@ -1,6 +1,7 @@
 package com.insearchofknowledge.bugTracker.ticket;
 
 import com.insearchofknowledge.bugTracker.comment.Comment;
+import com.insearchofknowledge.bugTracker.developer.DeveloperRepository;
 import com.insearchofknowledge.bugTracker.developer.DeveloperService;
 import com.insearchofknowledge.bugTracker.ticket.ticketDto.*;
 import com.insearchofknowledge.bugTracker.ticket.ticketEnum.TicketPriority;
@@ -10,6 +11,7 @@ import com.insearchofknowledge.bugTracker.ticket.ticketMapper.AddTicketMapper;
 import com.insearchofknowledge.bugTracker.ticket.ticketMapper.GetTicketDetailedMapper;
 import com.insearchofknowledge.bugTracker.ticket.ticketMapper.GetTicketSimplifiedMapper;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -27,9 +29,12 @@ public class TicketService {
     private final GetTicketSimplifiedMapper getTicketSimplifiedMapper;
     private final TicketRepository ticketRepository;
     private final DeveloperService developerService;
+    private final DeveloperRepository developerRepository;
 
-    public GetTicketDetailedDto createNewTicket(AddTicketDto addTicketDto) {
+    public GetTicketDetailedDto createNewTicket(AddTicketDto addTicketDto, HttpServletRequest request) {
         Ticket newTicket = addTicketMapper.map(addTicketDto);
+        String developerId = developerService.getDeveloperIdBasedOnToken(request);
+        newTicket.setAuthor(developerRepository.getReferenceById(developerId));
         newTicket.setDateCreated(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS));
         ticketRepository.save(newTicket);
         return getTicketDetailedMapper.map(newTicket);

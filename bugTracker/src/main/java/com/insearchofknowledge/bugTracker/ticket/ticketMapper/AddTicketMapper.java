@@ -26,7 +26,6 @@ public class AddTicketMapper implements Mapper<AddTicketDto, Ticket> {
         ticket.setTypeOfTicket(Enum.valueOf(TypeOfTicket.class, addTicketDto.getTypeOfTicket()));
         ticket.setTicketPriority(Enum.valueOf(TicketPriority.class, addTicketDto.getTicketPriority()));
         ticket.setTicketStatus(Enum.valueOf(TicketStatus.class, addTicketDto.getTicketStatus()));
-        ticket.setAuthor(developerRepository.getReferenceById(addTicketDto.getAuthor()));
         ticket.setDevsAssigned(developerRepository.findAllById(addTicketDto.getDevsAssigned()));
         ticket.setProject(projectRepository.getReferenceById(addTicketDto.getProject()));
         return ticket;

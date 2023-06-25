@@ -1,6 +1,7 @@
 package com.insearchofknowledge.bugTracker.ticket;
 
 import com.insearchofknowledge.bugTracker.ticket.ticketDto.*;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -17,8 +18,8 @@ public class TicketController {
     private final TicketService ticketService;
 
     @PostMapping("/add")
-    public ResponseEntity<GetTicketDetailedDto> addTicket(@RequestBody @Valid AddTicketDto addTicketDto) {
-        GetTicketDetailedDto getTicketDetailedDto = ticketService.createNewTicket(addTicketDto);
+    public ResponseEntity<GetTicketDetailedDto> addTicket(@RequestBody @Valid AddTicketDto addTicketDto, HttpServletRequest request) {
+        GetTicketDetailedDto getTicketDetailedDto = ticketService.createNewTicket(addTicketDto, request);
         return new ResponseEntity<>(getTicketDetailedDto, HttpStatus.CREATED);
     }
 
