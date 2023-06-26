@@ -19,7 +19,7 @@ public class AddCommentMapper implements Mapper<AddCommentDto, Comment> {
     public Comment map(AddCommentDto addCommentDto) {
         Comment comment = new Comment();
         comment.setContent(addCommentDto.getContent());
-        comment.setCommentAuthor(developerRepository.getReferenceById(addCommentDto.getCommentAuthor()));
+//        comment.setCommentAuthor(developerRepository.getReferenceById(addCommentDto.getCommentAuthor()));
         comment.setTicket(ticketRepository.getReferenceById(addCommentDto.getTicket()));
         return comment;
     }

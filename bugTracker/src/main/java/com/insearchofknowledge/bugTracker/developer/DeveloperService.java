@@ -86,6 +86,8 @@ public class DeveloperService {
     }
 
     // When adding a new ticket it also needs to be added to the list of tickets created by the author
+    // thanks to the awesomeness of Spring Boot this method is redundat
+    // if the mapping is set up as it should be this update is performed automatically
     public void updateTicketsCreated(String authorId, Ticket ticket) throws EntityNotFoundException {
         Developer author = fetchDeveloperIfItExists(authorId);
         author.getTicketsCreated().add(ticket);
@@ -125,4 +127,6 @@ public class DeveloperService {
         String developerId = tokenRepository.findByToken(jwt).get().getDeveloper().getId();
         return developerId;
     }
+
+
 }

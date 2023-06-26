@@ -16,10 +16,8 @@ public class AddCommentDto {
     private String content;
     @NotNull
     @NotBlank
-    private String commentAuthor;
-    @NotNull
-    @NotBlank
     private String ticket;
 
     // Date Posted will be set in the service layer
+    // Author will be set in the service layer
 }

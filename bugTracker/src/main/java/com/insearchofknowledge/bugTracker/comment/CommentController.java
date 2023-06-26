@@ -3,6 +3,7 @@ package com.insearchofknowledge.bugTracker.comment;
 import com.insearchofknowledge.bugTracker.comment.commentDto.AddCommentDto;
 import com.insearchofknowledge.bugTracker.comment.commentDto.GetCommentDto;
 import com.insearchofknowledge.bugTracker.comment.commentDto.UpdateCommentDto;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -19,8 +20,8 @@ public class CommentController {
     private final CommentService commentService;
 
     @PostMapping("/add")
-    public ResponseEntity<GetCommentDto> addComment(@RequestBody AddCommentDto addCommentDto) {
-        GetCommentDto newComment = commentService.createNewComment(addCommentDto);
+    public ResponseEntity<GetCommentDto> addComment(@RequestBody AddCommentDto addCommentDto, HttpServletRequest request) {
+        GetCommentDto newComment = commentService.createNewComment(addCommentDto, request);
         return new ResponseEntity<>(newComment, HttpStatus.CREATED);
     }
 

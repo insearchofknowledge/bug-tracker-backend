@@ -5,8 +5,12 @@ import com.insearchofknowledge.bugTracker.comment.commentDto.GetCommentDto;
 import com.insearchofknowledge.bugTracker.comment.commentDto.UpdateCommentDto;
 import com.insearchofknowledge.bugTracker.comment.commentMapper.AddCommentMapper;
 import com.insearchofknowledge.bugTracker.comment.commentMapper.GetCommentMapper;
+import com.insearchofknowledge.bugTracker.developer.Developer;
+import com.insearchofknowledge.bugTracker.developer.DeveloperRepository;
+import com.insearchofknowledge.bugTracker.developer.DeveloperService;
 import com.insearchofknowledge.bugTracker.ticket.TicketService;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -23,10 +27,15 @@ public class CommentService {
     private final GetCommentMapper getCommentMapper;
     private final CommentRepository commentRepository;
     private final TicketService ticketService;
+    private final DeveloperService developerService;
+    private final DeveloperRepository developerRepository;
 
-    public GetCommentDto createNewComment(AddCommentDto addCommentDto) {
+    public GetCommentDto createNewComment(AddCommentDto addCommentDto, HttpServletRequest request) {
         Comment comment = addCommentMapper.map(addCommentDto);
         comment.setDatePosted(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS));
+        String developerId = developerService.getDeveloperIdBasedOnToken(request);
+        Developer author = developerRepository.getReferenceById(developerId);
+        comment.setCommentAuthor(author);
         comment.setWasEdited(false);
         return getCommentMapper.map(commentRepository.save(comment));
     }
