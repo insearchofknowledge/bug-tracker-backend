@@ -41,6 +41,7 @@ public class Ticket {
     private String title;
     @NotNull(message = "Description required")
     @NotBlank(message = "Description required")
+    @Column(columnDefinition = "TEXT")
     private String description;
     private LocalDateTime dateCreated;
     private LocalDateTime lastDateModified;

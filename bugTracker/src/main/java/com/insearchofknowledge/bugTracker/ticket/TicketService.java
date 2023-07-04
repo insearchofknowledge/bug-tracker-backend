@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -61,7 +62,9 @@ public class TicketService {
 
     public List<Comment> fetchCommentsForTicket(String ticketId) throws EntityNotFoundException{
         Ticket ticket = fetchTicketIfItExists(ticketId);
-        return ticket.getComments();
+        List<Comment> sortedComments = ticket.getComments();
+        sortedComments.sort(Comparator.comparing(Comment::getDatePosted));
+        return sortedComments;
     }
 
     public GetTicketDetailedDto updateSingleFieldOfATicket(String id, UpdateTicketSingleFieldDto updateTicketSingleFieldDto) throws EntityNotFoundException, NoSuchFieldException, ClassCastException {
